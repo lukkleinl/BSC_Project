@@ -1,9 +1,0 @@
-setup.cfg
-setup.py
-src/BSC_Project.egg-info/PKG-INFO
-src/BSC_Project.egg-info/SOURCES.txt
-src/BSC_Project.egg-info/dependency_links.txt
-src/BSC_Project.egg-info/not-zip-safe
-src/BSC_Project.egg-info/requires.txt
-src/BSC_Project.egg-info/top_level.txt
-src/dataset/dataset.py
