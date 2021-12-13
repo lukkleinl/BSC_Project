@@ -14,4 +14,4 @@ class Config():
     # predict
     processed_test = "/home/lukas/PycharmProjects/BSC_Project/src/data/test.csv"
     predicted_file = "/home/lukas/PycharmProjects/BSC_Project/src/data/predict.csv"
-    export_result: True
+    export_result = True

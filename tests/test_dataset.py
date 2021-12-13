@@ -1,8 +1,8 @@
 import pytest
 import pandas as pd
 
-from dataset.dataset import Dataset
-from config.config import Config
+from model.dataset import Dataset
+from preprocessing.config import Config
 
 
 def test_creating_dataset():
