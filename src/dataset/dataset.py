@@ -28,12 +28,3 @@ class Dataset:
         self.train.to_csv(self.processed_train, index=False)
         self.test.to_csv(self.processed_test, index=False)
 
-
-if __name__ == '__main__':
-    conf = Config()
-    data = Dataset(conf)
-    data.transform_data()
-    data.train_test_split()
-    data = pd.read_csv(conf.processed_train)
-    X, y, cols = data.drop("quality", axis=1).to_numpy(), data["quality"], list(data.columns)
-    print(cols)
