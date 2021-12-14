@@ -1,5 +1,8 @@
 import urllib.request
 
+import numpy as np
+import pandas as pd
+
 
 def get_data(url, out_path):
     # url for  wine quality
@@ -20,3 +23,18 @@ def get_data(url, out_path):
     # data = yf.download(stock, last_month_date, actual_date)  # Getting data from Yahoo Finance
     # da= pd.DataFrame(data=data)
     # da.to_csv('model/data/raw_data.csv')
+
+
+def replace_spaces_with_underscores(path):
+    df = pd.read_csv(path)
+    df.columns = df.columns.str.replace(' ', '_')
+    df.columns = df.columns.str.replace('"', '')
+    df.to_csv(path,index=False)
+
+
+
+def data_quick_check(df):
+    print(df.info())
+    print(df.describe())
+    print(df.head())
+
