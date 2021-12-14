@@ -25,16 +25,14 @@ def get_data(url, out_path):
     # da.to_csv('model/data/raw_data.csv')
 
 
-def replace_spaces_with_underscores(path):
-    df = pd.read_csv(path)
-    df.columns = df.columns.str.replace(' ', '_')
-    df.columns = df.columns.str.replace('"', '')
-    df.to_csv(path,index=False)
-
+# def replace_spaces_with_underscores(path):
+#     df = pd.read_csv(path)
+#     df.columns = df.columns.str.replace(' ', '_')
+#     df.columns = df.columns.str.replace('"', '')
+#     df.to_csv(path, index=False)
 
 
 def data_quick_check(df):
     print(df.info())
     print(df.describe())
     print(df.head())
-
