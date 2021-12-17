@@ -1,8 +1,5 @@
 import urllib.request
 
-import numpy as np
-import pandas as pd
-
 
 def get_data(url, out_path):
     # url for  wine quality

@@ -1,7 +1,7 @@
-class Config():
+class Config:
     # Data prep
     url = "https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv"
-    raw_data_file = "/home/lukas/PycharmProjects/BSC_Project/src/data/winequality-red.csv"
+    raw_data_file = "data/winequality-red.csv"
     test_size = 0.2
     random_state = 42
 
