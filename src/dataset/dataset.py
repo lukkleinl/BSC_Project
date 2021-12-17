@@ -19,6 +19,7 @@ class Dataset:
         self.export_result = config.export_result
         self.train = []
         self.test = []
+        self.model=[]
 
     def transform_data(self):
         bins = (2, 6.5, 8)
