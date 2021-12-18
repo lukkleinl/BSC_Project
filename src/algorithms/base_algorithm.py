@@ -7,6 +7,7 @@ class Strategy(ABC):
     def do_algorithm(self):
         pass
 
+
 class Context:
     def __init__(self, strategy: Strategy):
         self._strategy = strategy
@@ -21,5 +22,3 @@ class Context:
 
     def apply_algorithm(self):
         result = self._strategy.do_algorithm()
-
-
