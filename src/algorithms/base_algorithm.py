@@ -4,7 +4,11 @@ from typing import List
 
 class BaseAlgorithm(ABC):
     @abstractmethod
-    def do_algorithm(self):
+    def fit(self):
+        pass
+
+    @abstractmethod
+    def predict(self):
         pass
 
 
@@ -21,4 +25,4 @@ class Context:
         self._strategy = strategy
 
     def apply_algorithm(self):
-        result = self._strategy.do_algorithm()
+        result = self._strategy.fit()

@@ -2,5 +2,8 @@ from algorithms.base_algorithm import BaseAlgorithm
 
 
 class RandomForestClassifier(BaseAlgorithm):
-    def do_algorithm(self):
+    def fit(self,X,y):
+        pass
+
+    def predict(self,X):
         pass

@@ -10,7 +10,7 @@ from sklearn.preprocessing import LabelEncoder
 
 class Dataset:
     def __init__(self, config):
-        self._dataset = pd.read_csv(config.raw_data_file)
+        self._dataset = pd.read_csv(config.raw_data_file, sep=";")
         self._target = config.target
         self._test_size = config.test_size
         self._random_state = config.random_state
