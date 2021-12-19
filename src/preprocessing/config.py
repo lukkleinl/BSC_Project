@@ -4,6 +4,7 @@ class Config:
     raw_data_file = "data/winequality-red.csv"
     test_size = 0.2
     random_state = 42
+    target = "quality"
 
     # train
     processed_train = "data/train.csv"

@@ -1,6 +1,6 @@
-from algorithms.base_algorithm import Strategy
+from algorithms.base_algorithm import BaseAlgorithm
 
 
-class RandomForestClassifier(Strategy):
+class RandomForestClassifier(BaseAlgorithm):
     def do_algorithm(self):
         pass

@@ -9,6 +9,4 @@ def test_creating_dataset():
     data = Dataset(conf)
     data.transform_data()
     data.train_test_split()
-    data.train = pd.DataFrame(data.train)
-    _, _, _ = data.train.drop("quality", axis=1).to_numpy(), data.train["quality"], list(data.train.columns)
-
+    data.train()

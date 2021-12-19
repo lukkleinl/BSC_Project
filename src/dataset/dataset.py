@@ -11,6 +11,7 @@ from sklearn.preprocessing import LabelEncoder
 class Dataset:
     def __init__(self, config):
         self._dataset = pd.read_csv(config.raw_data_file)
+        self._target = config.target
         self._test_size = config.test_size
         self._random_state = config.random_state
         self._processed_train = config.processed_train
@@ -28,9 +29,9 @@ class Dataset:
     def transform_data(self):
         bins = (2, 6.5, 8)
         group_names = ["bad", "good"]
-        self._dataset["quality"] = pd.cut(self._dataset["quality"], bins=bins, labels=group_names)
+        self._dataset[self._target] = pd.cut(self._dataset[self._target], bins=bins, labels=group_names)
         label_quality = LabelEncoder()
-        self._dataset["quality"] = label_quality.fit_transform(self._dataset["quality"])
+        self._dataset[self._target] = label_quality.fit_transform(self._dataset[self._target])
 
     def train_test_split(self):
         self._train, self._test = train_test_split(self._dataset, test_size=self._test_size,
@@ -40,11 +41,11 @@ class Dataset:
 
     def train(self):
         self._model = sklearn.ensemble.GradientBoostingClassifier()
-        X, y, cols = self._getXY(self._train, "quality")
+        X, y, cols = self._getXY(self._train, self._target)
         self._model.fit(X, y)
         pickle.dump(self._model, open(self._model_path, 'wb'))
         self._model = (pickle.load(open(self._model_path, 'rb')))
-        X, y, cols = self._getXY(self._test, "quality")
+        X, y, cols = self._getXY(self._test, self._target)
         y_predicted = self._model.predict(X)
         mean_square_error = mean_squared_error(y, y_predicted)
         print(mean_square_error)
