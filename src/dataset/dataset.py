@@ -7,8 +7,13 @@ from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 
+from evaluate.dataset_listener import setup_log_event_handlers
+from evaluate.event import post_event
+
 
 class Dataset:
+    setup_log_event_handlers()
+
     def __init__(self, config):
         self._dataset = pd.read_csv(config.raw_data_file, sep=";")
         self._target = config.target
@@ -32,6 +37,7 @@ class Dataset:
         self._dataset[self._target] = pd.cut(self._dataset[self._target], bins=bins, labels=group_names)
         label_quality = LabelEncoder()
         self._dataset[self._target] = label_quality.fit_transform(self._dataset[self._target])
+        post_event("data_changed", self._dataset)
 
     def train_test_split(self):
         self._train, self._test = train_test_split(self._dataset, test_size=self._test_size,
