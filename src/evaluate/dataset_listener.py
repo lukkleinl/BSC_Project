@@ -10,5 +10,6 @@ logger = set_logger("./log/dataset.log")
 def handle_changed_data(df: pd.DataFrame):
     logger.info(f"data changed {df}")
 
+
 def setup_log_event_handlers():
     subscribe("data_changed", handle_changed_data)
