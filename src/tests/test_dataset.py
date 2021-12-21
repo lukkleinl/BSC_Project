@@ -10,3 +10,4 @@ def test_creating_dataset():
     data.transform_data()
     data.train_test_split()
     data.train()
+    data.predict()

@@ -8,6 +8,7 @@ def main():
     dataset.transform_data()
     dataset.train_test_split()
     dataset.train()
+    dataset.predict()
 
 
 if __name__ == "__main__":
