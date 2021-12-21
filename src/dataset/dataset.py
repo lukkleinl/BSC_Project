@@ -2,6 +2,7 @@ import pickle
 
 import pandas as pd
 import sklearn.ensemble
+from sklearn import metrics
 from sklearn.metrics import mean_squared_error
 
 from sklearn.model_selection import train_test_split
@@ -46,15 +47,19 @@ class Dataset:
         self._test.to_csv(self._processed_test, index=False)
 
     def train(self):
-        self._model = sklearn.ensemble.GradientBoostingClassifier()
+        self._model = sklearn.ensemble.RandomForestClassifier()
         X, y, cols = self._getXY(self._train, self._target)
         self._model.fit(X, y)
         pickle.dump(self._model, open(self._model_path, 'wb'))
+
+    def predict(self):
         self._model = (pickle.load(open(self._model_path, 'rb')))
         X, y, cols = self._getXY(self._test, self._target)
         y_predicted = self._model.predict(X)
         mean_square_error = mean_squared_error(y, y_predicted)
+        print(metrics.accuracy_score(y, y_predicted))
         print(mean_square_error)
+        print(metrics.confusion_matrix(y, y_predicted))
 
     def _getXY(self, data, target: str):
         return data.drop(target, axis=1).to_numpy(), data[target], list(data.columns)
