@@ -9,11 +9,11 @@ from preprocessing.transform_data import binary_classification_and_label_encodin
 
 
 def test_preprocess():
-    conf = get_config_from_yaml("data/config_files/config_rfc.yaml")
+    conf = get_config_from_yaml("src/data/config_files/config_rfc.yaml")
     load = Loader(**conf["Loader"])
     paths = Paths(**conf["Paths"])
 
-    df = pd.read_csv(paths.raw_data_path + load.name_of_file, sep=';')
+    df = pd.read_csv("src/" + paths.raw_data_path + load.name_of_file, sep=';')
     df = binary_classification_and_label_encoding(df, {"target":"quality"})
 
     print(type(df))
