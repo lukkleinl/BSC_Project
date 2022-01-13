@@ -1,0 +1,30 @@
+paths:
+   raw_data_file: "data/raw/"
+   preprocessing_files: "data/preprocessed/"
+   processed_files: "data/processed"
+   model_path: "data/model/"
+
+
+convert:
+  convert: True
+  path_notebook: "notebooks/Wine_Quality/prediction-of-quality-of-wine.ipynb"
+  processing_names:
+    - "clean_data.py"
+    - "transform_data.py"
+
+loader:
+  name: "URLLoader"
+  path: "data/raw"
+  url: "https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv"
+
+dataset:
+  ignore_columns:
+    - " "
+  test_size: 0.2
+  random_state: 42
+
+model:
+  ensemble_model: "StochasticGradientDecent"
+
+predict:
+  export_result: True

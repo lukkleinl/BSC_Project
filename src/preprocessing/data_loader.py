@@ -1,21 +1,40 @@
+import sys
 import urllib.request
+from abc import ABC, abstractmethod
 
 import pandas as pd
-import yfinance as yf
-import datetime as dt
+
+from data_classes.data_classes import Loader
 
 
-class BaseLoader:
+class BaseLoader(ABC):
+    """Abstract Class which specifies the core functions of a loader"""
+    out_path: str
+
     def __init__(self, out_path):
         self.out_path = out_path
 
+    @abstractmethod
     def get_data(self):
-        pass
+        """used to load the data
+           :return: the data from the saved location"""
 
 
-class WineLoader(BaseLoader):
+class CSVLoader(BaseLoader):
+    """loads a csv file from a given location"""
+
+    def __init__(self, out_path):
+        super().__init__(self, out_path)
+
+    def get_data(self):
+        return pd.read_csv(self.out_path, sep=";")
+
+
+class URLLoader(BaseLoader):
+    """loads and saves data from a given url to the given location"""
     # url for  wine quality
     # url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv'
+    url: str
 
     def __init__(self, url, out_path):
         self.url = url
@@ -23,21 +42,42 @@ class WineLoader(BaseLoader):
 
     def get_data(self):
         urllib.request.urlretrieve(self.url, self.out_path)
+        return pd.read_csv(self.out_path, sep=";")
 
 
-class StockPredictionLoader(BaseLoader):
-    def __init__(self, out_path):
-        BaseLoader.__init__(self, out_path)
+class LoaderFactory(ABC):
+    """Factory which represents the different algorithm factories"""
 
-    def get_data(self, out_path):
-        actual_date = dt.date.today()  # Take the actual date
-        last_month_date = actual_date - dt.timedelta(days=300)
-        actual_date = actual_date.strftime("%Y-%m-%d")
-        last_month_date = last_month_date.strftime("%Y-%m-%d")
-        # '''
-        # Stock data from https://finance.yahoo.com/quote/FB/news?ltr=1
-        # '''
-        stock = 'FB'  # Stock name
-        data = yf.download(stock, last_month_date, actual_date)  # Getting data from Yahoo Finance
-        da = pd.DataFrame(data=data)
-        da.to_csv(out_path)
+    @abstractmethod
+    def get_loader(self, loader: Loader, out_path: str):
+        """returns the specified algorithm"""
+
+
+class CSVLoaderFactory(LoaderFactory):
+    """Factory to get a random forest classifier"""
+
+    def get_loader(self, loader: Loader, out_path: str):
+        return CSVLoader(out_path + loader.name_of_file)
+
+
+class URLLoaderFactory(LoaderFactory):
+    """Factory to get a Stochastic Gradient Decent Classifier"""
+
+    def get_loader(self, loader: Loader, out_path: str):
+        return URLLoader(loader.url, out_path + loader.name_of_file)
+
+
+def create_loader(loader_name: str):
+    """used to identify which factory should be used"""
+    """return the selected factory"""
+
+    """names of factories"""
+    loaders = {
+        "CSVLoader": CSVLoaderFactory(),
+        "URLLoader": URLLoaderFactory()
+    }
+
+    if loader_name in loaders:
+        return loaders[loader_name]
+    else:
+        sys.exit("loader name was not recognized")
