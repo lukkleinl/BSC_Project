@@ -86,7 +86,7 @@ def import_and_load_prepr_function(preprocessing_step: PrepStep, df: pd.DataFram
 
 
 @click.command()
-@click.argument("config_file", type=str, default="data/config_files/config_rfc.yaml")
+@click.argument("config_file", type=str, default="data/config_files/config_rfc_no_convert.yaml")
 def create_model(config_file):
     """
     Main function to create a model with the given configuration
