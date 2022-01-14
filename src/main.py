@@ -9,14 +9,14 @@ from algorithms.algorithms_interaction import create_algorithm, create_train_pre
 from data_classes.data_classes import Converter, Paths, Loader, Model, Dataset, PreprocessingSteps, PrepStep
 from conversion.conversion import get_parameters_from_notebook, get_config_from_yaml
 from preprocessing.data_loader import create_loader
-from preprocessing.transform_data import separate_features_outcome, scale_data
+from preprocessing.transform_data import separate_features_outcome
 
 
 def get_parameter(config):
     """
     loads the parameters either from yaml file or from the specified notebook"
     :param config: Configuration file
-    :return: Parameters either from notebook or from config file
+    :return: Parameters either from notebook or from data_classes file
     """
 
     converter = Converter(**config["Converter"])
@@ -85,6 +85,31 @@ def import_and_load_prepr_function(preprocessing_step: PrepStep, df: pd.DataFram
     return df
 
 
+def load_configuration(config_file):
+    """
+    loads data from specified config file
+    :param config_file: location of yaml file where either the parameters are stored or the credentials
+                        of the notebooks from where the parameters can load from
+    :return: dataclasses which were specified in configuration file
+    """
+    try:
+        conf = get_config_from_yaml(config_file)
+        params = get_parameter(conf)
+        paths = Paths(**params["Paths"])
+        loader = Loader(**params["Loader"])
+        model = Model(**params["Model"])
+        dataclass = Dataset(**params["Dataset"])
+        converter = Converter(**params["Converter"])
+        prepr_steps_prior = PreprocessingSteps(params["Preprocessing_Steps_pre_split"])
+        prepr_steps_after = PreprocessingSteps(params["Preprocessing_Steps_after_split"])
+    except KeyError as err:
+        sys.exit(f"Parameters don't match with implemented classes in the following class {err}")
+    except FileNotFoundError as err:
+        sys.exit(f"Specified file not found {err}")
+
+    return paths, loader, model, dataclass, prepr_steps_after, prepr_steps_prior, converter
+
+
 @click.command()
 @click.argument("config_file", type=str, default="data/config_files/config_rfc_no_convert.yaml")
 def create_model(config_file):
@@ -95,30 +120,20 @@ def create_model(config_file):
     """
 
     """Configuration"""
-    try:
-        conf = get_config_from_yaml(config_file)
-        params = get_parameter(conf)
-        paths = Paths(**params["Paths"])
-        loader = Loader(**params["Loader"])
-        model = Model(**params["Model"])
-        dataclass = Dataset(**params["Dataset"])
-        prepr_steps_prior = PreprocessingSteps(params["Preprocessing_Steps_pre_split"])
-        prepr_steps_after = PreprocessingSteps(params["Preprocessing_Steps_after_split"])
-    except KeyError as err:
-        sys.exit(f"Parameters don't match with implemented classes in the following class {err}")
-    except FileNotFoundError as err:
-        sys.exit(f"Specified file not found {err}")
+    paths, loader, model, dataclass, prepr_steps_after, prepr_steps_prior, converter = load_configuration(config_file)
 
     """Load Data"""
     loader_factory = create_loader(loader.name)
     load = loader_factory.get_loader(loader, paths.raw_data_path)
     df = load.get_data()
+    df = pd.DataFrame(df)
 
     """Preprocess Data prior to separation of features"""
     preprocessing_steps = get_list_of_preprocessing_steps(prepr_steps_prior)
 
     for step in preprocessing_steps:
         df = import_and_load_prepr_function(step, df)
+        df.to_csv(paths.preprocessing_path + step.name_of_step + ".csv")
 
     """Separate Feature and Outcome + scale Data"""
     X, y = separate_features_outcome(df, {"target": dataclass.target})
@@ -128,11 +143,22 @@ def create_model(config_file):
 
     for step in preprocessing_steps:
         X = import_and_load_prepr_function(step, X)
+        X = pd.DataFrame(X)
+        df = X.join(y)
+        df.to_csv(paths.preprocessing_path + step.name_of_step + ".csv")
 
+    df = X.join(y)
+    df.to_csv(paths.processed_path + "processed.csv")
     """Parameter Specification and train tes split"""
     train_size = dataclass.parameter_train_test_split[0]
     random_state = dataclass.parameter_train_test_split[1]
     x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=train_size, random_state=random_state)
+
+    """join and export to csv"""
+    df_train = x_train.join(y_train)
+    df_test = x_test.join(y_test)
+    df_train.to_csv(paths.processed_path + "train_split.csv")
+    df_test.to_csv(paths.processed_path + "test_split.csv")
 
     """Create Factory for specified Model"""
     factory = create_algorithm(model.ensemble_model)

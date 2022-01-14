@@ -1,30 +1,52 @@
-paths:
-   raw_data_file: "data/raw/"
-   preprocessing_files: "data/preprocessed/"
-   processed_files: "data/processed"
+Paths:
+   raw_data_path: "data/raw/"
+   preprocessing_path: "data/preprocessed/"
+   processed_path: "data/processed/"
    model_path: "data/model/"
+   notebook_path: "data/notebooks/Wine_Quality/"
+   output_path_converted_files: "converted_files/"
 
+Converter:
+  convert_preprocessing_steps: False
+  parameter_conversion: False
+  notebook_name: "prediction-of-quality-of-wine.ipynb"
+  preprocessing_tags:
+    - "transform_data_func"
 
-convert:
-  convert: True
-  path_notebook: "notebooks/Wine_Quality/prediction-of-quality-of-wine.ipynb"
-  processing_names:
-    - "clean_data.py"
-    - "transform_data.py"
+Preprocessing_Steps_pre_split:
+  transform_data_func:
+    conversion: True
+    params:
+      location_of_step: "converted_files."
+      name_of_step: "transform_data_func"
+      name_of_module: "transform_data_func"
+      target: "quality"
 
-loader:
+Preprocessing_Steps_after_split:
+  scale_data:
+    conversion: False
+    params:
+      location_of_step: "preprocessing."
+      name_of_step: "scale_data"
+      name_of_module: "transform_data"
+      scaler_name: "StandardScaler"
+
+Loader:
   name: "URLLoader"
-  path: "data/raw"
+  name_of_file: "raw_data.csv"
   url: "https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv"
 
-dataset:
-  ignore_columns:
-    - " "
-  test_size: 0.2
-  random_state: 42
+Dataset:
+  target: "quality"
+  parameter_train_test_split:
+    - 0.2
+    - 42
 
-model:
+Model:
+  file_name: "sgd_model_new.obj"
   ensemble_model: "StochasticGradientDecent"
-
-predict:
+  model_config: {n_estimators: 100, random_state: 42}
   export_result: True
+
+
+
