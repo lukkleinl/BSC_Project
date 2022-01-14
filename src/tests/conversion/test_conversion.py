@@ -1,11 +1,7 @@
 import importlib
-import os
-import sys
 
-import nbformat
 import pytest
 import yaml
-from nbparameterise import extract_parameters
 
 from conversion.conversion import get_config_from_yaml, convert_cells, get_parameters_from_notebook
 from main import load_configuration
@@ -30,6 +26,7 @@ def test_convert_cells():
     """load module of preprocessing step"""
     module = importlib.import_module("converted_files.transform_data_func")
     assert module
+    func = module.__getattribute__("transform_data_func")
 
 
 def test_parameters_from_notebook():
@@ -40,4 +37,3 @@ def test_parameters_from_notebook():
 
     with pytest.raises(SystemExit):
         get_parameters_from_notebook(paths.notebook_path + "prediction-of-quality-of-wine_without_params.ipynb")
-
