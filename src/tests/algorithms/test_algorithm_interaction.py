@@ -6,11 +6,11 @@ from main import load_configuration
 from preprocessing.data_loader import create_loader
 from preprocessing.transform_data import separate_features_outcome
 
-paths, loader, model, dataclass, prepr_steps_after, prepr_steps_prior , converter= load_configuration("tests/data/config_files"
+paths, loader, model, dataclass, prepr_steps_after, prepr_steps_prior , converter= load_configuration("src/tests/data/config_files"
                                                                                            "/test_config_rfc.yaml")
 
 sgd_paths, sgd_loader, sgd_model, sgd_dataclass, sgd_prepr_steps_after, sgd_prepr_steps_prior, converter = load_configuration(
-    "tests/data/config_files"
+    "src/tests/data/config_files"
     "/test_config_sgd.yaml")
 
 

@@ -8,13 +8,13 @@ from main import load_configuration
 from tests.conversion.parameters_from_notebook import get_params_notebook
 
 paths, loader, model, dataclass, prepr_steps_after, prepr_steps_prior, converter = load_configuration(
-    "tests/data/config_files"
+    "src/tests/data/config_files"
     "/test_config_rfc.yaml")
 
 
 def test_get_config_from_yaml():
-    params = get_config_from_yaml("tests/data/config_files/test_config_rfc.yaml")
-    with open("tests/data/config_files/test_config_rfc.yaml") as file:
+    params = get_config_from_yaml("src/tests/data/config_files/test_config_rfc.yaml")
+    with open("src/tests/data/config_files/test_config_rfc.yaml") as file:
         test_params = yaml.load(file, Loader=yaml.FullLoader)
     assert params == test_params
 

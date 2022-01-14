@@ -5,11 +5,11 @@ from main import load_configuration
 from preprocessing.data_loader import create_loader
 from preprocessing.transform_data import separate_features_outcome
 
-paths, loader, model, dataclass, prepr_steps_after, prepr_steps_prior, converter = load_configuration("tests/data"
+paths, loader, model, dataclass, prepr_steps_after, prepr_steps_prior, converter = load_configuration("src/tests/data"
                                                                                                       "/config_files"
                                                                                            "/test_config_rfc.yaml")
 paths_sgd, loader_sgd, model_sgd, dataclass_sgd, prepr_steps_after_sgd, prepr_steps_prior_sgd, converter = \
-    load_configuration("tests/data/config_files/test_config_sgd.yaml")
+    load_configuration("src/tests/data/config_files/test_config_sgd.yaml")
 
 
 def test_random_forest_classifier():

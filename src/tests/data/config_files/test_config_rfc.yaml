@@ -1,10 +1,10 @@
 Paths:
-   raw_data_path: "tests/data/raw/"
-   preprocessing_path: "tests/data/preprocessed/"
-   processed_path: "tests/data/processed/"
-   model_path: "tests/data/model/"
-   notebook_path: "tests/data/notebooks/Wine_Quality/"
-   output_path_converted_files: "tests/converted_files/"
+   raw_data_path: "src/tests/data/raw/"
+   preprocessing_path: "src/tests/data/preprocessed/"
+   processed_path: "src/tests/data/processed/"
+   model_path: "src/tests/data/model/"
+   notebook_path: "src/tests/data/notebooks/Wine_Quality/"
+   output_path_converted_files: "src/tests/converted_files/"
 
 Converter:
   convert_preprocessing_steps: False
