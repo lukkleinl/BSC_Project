@@ -52,8 +52,9 @@ def get_parameters_from_notebook(path_notebook: str):
     :param path_notebook:
     :return: found Parameters
     """
+
     notebook = nbformat.read(path_notebook, as_version=4)
-    found_params = dict()
+    found_params = {}
     try:
         orig_parameters = extract_parameters(notebook)
         for param in orig_parameters:
@@ -61,6 +62,3 @@ def get_parameters_from_notebook(path_notebook: str):
         return found_params
     except SyntaxError:
         sys.exit("no parameter in first cell at " + path_notebook)
-
-
-

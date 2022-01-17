@@ -30,23 +30,22 @@ class StochasticGradientDecentFactory(AlgorithmFactory):
 def create_algorithm(algorithm: str) -> AlgorithmFactory:
     """used to identify which factory should be used"""
 
-    """names of factories"""
     factories = {
+        """list of implemented factories"""
         "RandomForestClassifier": RandomForestFactory(),
         "StochasticGradientDecent": StochasticGradientDecentFactory()
     }
 
     if algorithm in factories:
         return factories[algorithm]
-    else:
-        sys.exit("algorithm name was not recognized")
+
+    sys.exit("algorithm name was not recognized")
 
 
-def create_train_predict(fac: AlgorithmFactory, X, y, X_test, y_test, model, out_path) -> None:
+def create_train_predict(fac: AlgorithmFactory, x_train, y_train, x_test, y_test, model, out_path) -> None:
     """gets the specified algorithm
         fits and predicts model on given data"""
 
     algorithm = fac.get_algorithm(model, out_path + model.file_name)
-    algorithm.fit(X, y)
-    algorithm.predict(X_test, y_test)
-
+    algorithm.fit(x_train, y_train)
+    algorithm.predict(x_test, y_test)

@@ -2,7 +2,7 @@ import sys
 
 import click
 
-from data_classes.data_classes import Converter, Paths, PreprocessingSteps
+from data_classes.data_classes import Converter, Paths
 from conversion.conversion import convert_cells, get_config_from_yaml
 
 

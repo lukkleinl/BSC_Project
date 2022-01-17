@@ -11,7 +11,6 @@ from data_classes.data_classes import Model
 class BaseAlgorithm(ABC):
     """Base class for the implemented algorithms"""
 
-    """model variables"""
     _model = """prediction model"""
     _ensemble_model = """name of used algorithm"""
     _model_path = """path where the model gets saved"""
@@ -20,15 +19,11 @@ class BaseAlgorithm(ABC):
         self._ensemble_model = model.ensemble_model
         self._model_path = out_path
 
-    """"Methods to save and load models"""
-
     def _save_model(self, model):
         pickle.dump(model, open(self._model_path, 'wb'))
 
     def _load_model(self):
         _model = pickle.load(open(self._model_path, 'rb'))
-
-    """base methods to fit and predict"""
 
     @abstractmethod
     def fit(self, X, y):

@@ -13,5 +13,5 @@ def set_logger(log_path):
     )
     file_handler.setFormatter(formatter)
     logger.addHandler(file_handler)
-    logger.info(f"Finished logger configuration!")
+    logger.info("Finished logger configuration!")
     return logger
