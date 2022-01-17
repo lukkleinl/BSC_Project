@@ -1,5 +1,7 @@
 import importlib
 import sys
+import urllib.error
+
 import click
 import pandas as pd
 
@@ -124,9 +126,13 @@ def create_model(config_file):
 
     """Load Data"""
     loader_factory = create_loader(loader.name)
-    load = loader_factory.get_loader(loader, paths.raw_data_path)
-    df = load.get_data()
-    df = pd.DataFrame(df)
+
+    try:
+        load = loader_factory.get_loader(loader, paths.raw_data_path)
+        df = load.get_data()
+        df = pd.DataFrame(df)
+    except urllib.error.URLError as err:
+        sys.exit(f"{err} \ncan not load csv from URL change to loader")
 
     """Preprocess Data prior to separation of features"""
     preprocessing_steps = get_list_of_preprocessing_steps(prepr_steps_prior)
