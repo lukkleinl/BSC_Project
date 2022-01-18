@@ -2,6 +2,8 @@ from array import array
 from dataclasses import dataclass
 from typing import Optional
 
+import data_classes
+
 
 @dataclass
 class Paths:
@@ -73,5 +75,27 @@ class PreprocessingSteps:
 
     names_of_steps: Optional[dict] = None
 
+    def get_list_of_preprocessing_steps(self):
+        """
+        creates a list of the specified preprocessing steps
 
+        :param prepr_steps: Dictionary of Preprocessing steps
+        :return: list of preprocessing steps
+        """
 
+        """getting the names"""
+        steps_names = [test for test in self.names_of_steps]
+
+        """creating list of steps"""
+        preprocessing_step = []
+        for step in steps_names:
+            """Create Preprocessing Step"""
+            prep_step = PrepStep(self.names_of_steps[step]["params"]["location_of_step"],
+                                 self.names_of_steps[step]["params"]["name_of_step"],
+                                 self.names_of_steps[step]["params"]["name_of_module"],
+                                 **self.names_of_steps[step])
+
+            """Append it to array"""
+            preprocessing_step.append(prep_step)
+
+        return preprocessing_step

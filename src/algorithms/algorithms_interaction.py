@@ -28,7 +28,11 @@ class StochasticGradientDecentFactory(AlgorithmFactory):
 
 
 def create_algorithm(algorithm: str) -> AlgorithmFactory:
-    """used to identify which factory should be used"""
+    """
+    used to identify which factory should be used
+    :param algorithm:
+    :return:
+    """
 
     """names of factories"""
     factories = {
@@ -41,11 +45,3 @@ def create_algorithm(algorithm: str) -> AlgorithmFactory:
     else:
         sys.exit(f"algorithm name was not recognized {algorithm}")
 
-
-def create_train_predict(fac: AlgorithmFactory, x_train, y_train, x_test, y_test, model, out_path) -> None:
-    """gets the specified algorithm
-        fits and predicts model on given data"""
-
-    algorithm = fac.get_algorithm(model, out_path + model.file_name)
-    algorithm.fit(x_train, y_train)
-    algorithm.predict(x_test, y_test)

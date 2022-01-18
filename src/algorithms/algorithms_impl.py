@@ -20,9 +20,18 @@ class BaseAlgorithm(ABC):
         self._model_path = out_path
 
     def _save_model(self, model):
+        """
+
+        :param model:
+        :return:
+        """
         pickle.dump(model, open(self._model_path, 'wb'))
 
     def _load_model(self):
+        """
+
+        :return:
+        """
         _model = pickle.load(open(self._model_path, 'rb'))
 
     @abstractmethod
@@ -41,33 +50,59 @@ class RandomForestClassifier(BaseAlgorithm):
     _model_random_state = """Seed for the random estimator"""
 
     def __init__(self, model: Model, out_path: str):
+        """
+
+        :param model:
+        :param out_path:
+        """
         self._model_n_estimators = model.model_config["n_estimators"]
         self._model_random_state = model.model_config["random_state"]
         super().__init__(model, out_path)
 
     def fit(self, X, y):
+        """
+
+        :param X:
+        :param y:
+        :return:
+        """
         self._model = RFC_Sklearn()
         self._model.fit(X, y)
         self._save_model(self._model)
 
     def predict(self, X, y):
+        """
+
+        :param X:
+        :param y:
+        :return:
+        """
         self._load_model()
         y_predicted = self._model.predict(X)
-        mean_square_error = mean_squared_error(y, y_predicted)
-        print(accuracy_score(y, y_predicted))
-        print(mean_square_error)
-        print(confusion_matrix(y, y_predicted))
+        return y_predicted
 
 
 class StochasticGradientDecentClassifier(BaseAlgorithm):
     """Stochastic Gradient Decent Classifier algorithm"""
 
     def fit(self, X, y):
+        """
+
+        :param X:
+        :param y:
+        :return:
+        """
         self._model = SGDClassifier(penalty=None)
         self._model.fit(X, y)
         self._save_model(self._model)
 
     def predict(self, X, y):
+        """
+
+        :param X:
+        :param y:
+        :return:
+        """
         self._load_model()
         y_predicted = self._model.predict(X)
         mean_square_error = mean_squared_error(y, y_predicted)

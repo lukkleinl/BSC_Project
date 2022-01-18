@@ -4,11 +4,12 @@ import urllib.error
 
 import click
 import pandas as pd
+from sklearn.metrics import mean_squared_error, accuracy_score, confusion_matrix
 
 from sklearn.model_selection import train_test_split
 
-from algorithms.algorithms_interaction import create_algorithm, create_train_predict
-from data_classes.data_classes import Converter, Paths, Loader, Model, Dataset, PreprocessingSteps, PrepStep
+from algorithms import algorithms_interaction
+from data_classes import data_classes
 from conversion.conversion import get_parameters_from_notebook, get_config_from_yaml
 from preprocessing.data_loader import create_loader
 from preprocessing.transform_data import separate_features_outcome
@@ -21,8 +22,8 @@ def get_parameter(config):
     :return: Parameters either from notebook or from data_classes file
     """
 
-    converter = Converter(**config["Converter"])
-    paths = Paths(**config["Paths"])
+    converter = data_classes.Converter(**config["Converter"])
+    paths = data_classes.Paths(**config["Paths"])
 
     """Deciding on where to load parameter from"""
     if converter.parameter_conversion:
@@ -32,33 +33,7 @@ def get_parameter(config):
         return config
 
 
-def get_list_of_preprocessing_steps(prepr_steps: PreprocessingSteps):
-    """
-    creates a list of the specified preprocessing steps
-
-    :param prepr_steps: Dictionary of Preprocessing steps
-    :return: list of preprocessing steps
-    """
-
-    """getting the names"""
-    steps_names = [test for test in prepr_steps.names_of_steps]
-
-    """creating list of steps"""
-    preprocessing_step = []
-    for step in steps_names:
-        """Create Preprocessing Step"""
-        prep_step = PrepStep(prepr_steps.names_of_steps[step]["params"]["location_of_step"],
-                             prepr_steps.names_of_steps[step]["params"]["name_of_step"],
-                             prepr_steps.names_of_steps[step]["params"]["name_of_module"],
-                             **prepr_steps.names_of_steps[step])
-
-        """Append it to array"""
-        preprocessing_step.append(prep_step)
-
-    return preprocessing_step
-
-
-def import_and_load_prepr_function(preprocessing_step: PrepStep, df: pd.DataFrame):
+def import_and_load_prepr_function(preprocessing_step: data_classes.PrepStep, df: pd.DataFrame):
     """
     First loads the module of the converted file,
        after that the specified function is loaded and executed.
@@ -97,13 +72,13 @@ def load_configuration(config_file):
     try:
         conf = get_config_from_yaml(config_file)
         params = get_parameter(conf)
-        paths = Paths(**params["Paths"])
-        loader = Loader(**params["Loader"])
-        model = Model(**params["Model"])
-        dataclass = Dataset(**params["Dataset"])
-        converter = Converter(**params["Converter"])
-        prepr_steps_prior = PreprocessingSteps(params["Preprocessing_Steps_pre_split"])
-        prepr_steps_after = PreprocessingSteps(params["Preprocessing_Steps_after_split"])
+        paths = data_classes.Paths(**params["Paths"])
+        loader = data_classes.Loader(**params["Loader"])
+        model = data_classes.Model(**params["Model"])
+        dataclass = data_classes.Dataset(**params["Dataset"])
+        converter = data_classes.Converter(**params["Converter"])
+        prepr_steps_prior = data_classes.PreprocessingSteps(params["Preprocessing_Steps_pre_split"])
+        prepr_steps_after = data_classes.PreprocessingSteps(params["Preprocessing_Steps_after_split"])
     except KeyError as err:
         sys.exit(f"Parameters don't match with implemented classes in the following class {err}")
     except FileNotFoundError as err:
@@ -126,16 +101,15 @@ def create_model(config_file):
 
     """Load Data"""
     loader_factory = create_loader(loader.name)
+    load = loader_factory.get_loader(loader, paths.raw_data_path)
 
     try:
-        load = loader_factory.get_loader(loader, paths.raw_data_path)
         df = load.get_data()
-        df = pd.DataFrame(df)
     except urllib.error.URLError as err:
-        sys.exit(f"{err} \ncan not load csv from URL change to loader")
+        sys.exit(f"{err} \ncan not load csv from URL\nchange to another loader")
 
     """Preprocess Data prior to separation of features"""
-    preprocessing_steps = get_list_of_preprocessing_steps(prepr_steps_prior)
+    preprocessing_steps = prepr_steps_prior.get_list_of_preprocessing_steps()
 
     for step in preprocessing_steps:
         df = import_and_load_prepr_function(step, df)
@@ -145,7 +119,7 @@ def create_model(config_file):
     X, y = separate_features_outcome(df, {"target": dataclass.target})
 
     """Preprocess Data after separation of features"""
-    preprocessing_steps = get_list_of_preprocessing_steps(prepr_steps_after)
+    preprocessing_steps = prepr_steps_after.get_list_of_preprocessing_steps()
 
     for step in preprocessing_steps:
         X = import_and_load_prepr_function(step, X)
@@ -167,10 +141,16 @@ def create_model(config_file):
     df_test.to_csv(paths.processed_path + "test_split.csv")
 
     """Create Factory for specified Model"""
-    factory = create_algorithm(model.ensemble_model)
+    factory = algorithms_interaction.create_algorithm(model.ensemble_model)
 
-    """Create train and predict Model"""
-    create_train_predict(factory, x_train, y_train, x_test, y_test, model, paths.model_path)
+    """Train and predict Model"""
+    algorithm = factory.get_algorithm(model, paths.model_path + model.file_name)
+    algorithm.fit(x_train, y_train)
+    y_predicted = algorithm.predict(x_test, y_test)
+    mean_square_error = mean_squared_error(y_test, y_predicted)
+    print(accuracy_score(y_test, y_predicted))
+    print(mean_square_error)
+    print(confusion_matrix(y_test, y_predicted))
 
 
 if __name__ == "__main__":
