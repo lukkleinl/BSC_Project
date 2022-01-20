@@ -1,7 +1,7 @@
 from sklearn.model_selection import train_test_split
 
 import algorithms
-from algorithms.algorithms_interaction import RandomForestFactory, create_algorithm, create_train_predict
+from algorithms.algorithms_creation import RandomForestFactory, create_algorithm, create_train_predict
 from main import load_configuration
 from preprocessing.data_loader import create_loader
 from preprocessing.transform_data import separate_features_outcome

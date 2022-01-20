@@ -3,7 +3,7 @@ import importlib
 import pytest
 import yaml
 
-from conversion.conversion import get_config_from_yaml, convert_cells, get_parameters_from_notebook
+from conversion.conversion_functions import get_config_from_yaml, convert_cells, get_parameters_from_notebook
 from main import load_configuration
 from tests.conversion.parameters_from_notebook import get_params_notebook
 

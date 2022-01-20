@@ -47,6 +47,7 @@ Model:
   ensemble_model: "RandomForestClassifier"
   model_config: {n_estimators: 100, random_state: 42}
   export_result: True
+  conversion: True
 
 
 

@@ -70,14 +70,13 @@ class RandomForestClassifier(BaseAlgorithm):
         self._model.fit(X, y)
         self._save_model(self._model)
 
-    def predict(self, X, y):
+    def predict(self, X):
         """
 
         :param X:
         :param y:
         :return:
         """
-        self._load_model()
         y_predicted = self._model.predict(X)
         return y_predicted
 
@@ -96,16 +95,12 @@ class StochasticGradientDecentClassifier(BaseAlgorithm):
         self._model.fit(X, y)
         self._save_model(self._model)
 
-    def predict(self, X, y):
+    def predict(self, X):
         """
 
         :param X:
         :param y:
         :return:
         """
-        self._load_model()
         y_predicted = self._model.predict(X)
-        mean_square_error = mean_squared_error(y, y_predicted)
-        print(accuracy_score(y, y_predicted))
-        print(mean_square_error)
-        print(confusion_matrix(y, y_predicted))
+        return y_predicted

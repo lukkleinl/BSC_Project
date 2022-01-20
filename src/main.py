@@ -4,13 +4,14 @@ import urllib.error
 
 import click
 import pandas as pd
-from sklearn.metrics import mean_squared_error, accuracy_score, confusion_matrix
+from matplotlib import pyplot as plt
+from sklearn.metrics import mean_squared_error, accuracy_score, confusion_matrix, ConfusionMatrixDisplay
 
 from sklearn.model_selection import train_test_split
 
-from algorithms import algorithms_interaction
+from algorithms import algorithms_creation
 from data_classes import data_classes
-from conversion.conversion import get_parameters_from_notebook, get_config_from_yaml
+from conversion.conversion_functions import get_parameters_from_notebook, get_config_from_yaml
 from preprocessing.data_loader import create_loader
 from preprocessing.transform_data import separate_features_outcome
 
@@ -19,7 +20,7 @@ def get_parameter(config):
     """
     loads the parameters either from yaml file or from the specified notebook"
     :param config: Configuration file
-    :return: Parameters either from notebook or from data_classes file
+    :return: config: Parameters either from notebook or from data_classes file
     """
 
     converter = data_classes.Converter(**config["Converter"])
@@ -40,7 +41,7 @@ def import_and_load_prepr_function(preprocessing_step: data_classes.PrepStep, df
        The preprocessing functions should all return a Dataframe
     :param preprocessing_step:
     :param df: Dataframe
-    :return: Preprocessed Dataframe
+    :return: df: Preprocessed Dataframe
     """
 
     """declaration of parameters"""
@@ -67,7 +68,8 @@ def load_configuration(config_file):
     loads data from specified config file
     :param config_file: location of yaml file where either the parameters are stored or the credentials
                         of the notebooks from where the parameters can load from
-    :return: dataclasses which were specified in configuration file
+    :return: paths, loader, model, dataclass, prepr_steps_after, prepr_steps_prior, converter
+             dataclasses which were specified in configuration file
     """
     try:
         conf = get_config_from_yaml(config_file)
@@ -141,12 +143,12 @@ def create_model(config_file):
     df_test.to_csv(paths.processed_path + "test_split.csv")
 
     """Create Factory for specified Model"""
-    factory = algorithms_interaction.create_algorithm(model.ensemble_model)
+    factory = algorithms_creation.create_algorithm(model.ensemble_model)
 
     """Train and predict Model"""
-    algorithm = factory.get_algorithm(model, paths.model_path + model.file_name)
-    algorithm.fit(x_train, y_train)
-    y_predicted = algorithm.predict(x_test, y_test)
+    training_algorithm = factory.get_algorithm(model, paths.model_path + model.file_name)
+    training_algorithm.fit(x_train, y_train)
+    y_predicted = training_algorithm.predict(x_test)
     mean_square_error = mean_squared_error(y_test, y_predicted)
     print(accuracy_score(y_test, y_predicted))
     print(mean_square_error)

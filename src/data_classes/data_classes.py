@@ -53,6 +53,7 @@ class Model:
     ensemble_model: str
     model_config: Optional[dict] = None
     export_result: Optional[bool] = False
+    conversion: Optional[bool] = False
 
 
 @dataclass
