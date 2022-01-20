@@ -4,14 +4,12 @@ import urllib.error
 
 import click
 import pandas as pd
-from matplotlib import pyplot as plt
-from sklearn.metrics import mean_squared_error, accuracy_score, confusion_matrix, ConfusionMatrixDisplay
-
+from sklearn.metrics import mean_squared_error, accuracy_score, confusion_matrix
 from sklearn.model_selection import train_test_split
 
 from algorithms import algorithms_creation
-from data_classes import data_classes
 from conversion.conversion_functions import get_parameters_from_notebook, get_config_from_yaml
+from data_classes import data_classes
 from preprocessing.data_loader import create_loader
 from preprocessing.transform_data import separate_features_outcome
 

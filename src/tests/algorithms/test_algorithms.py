@@ -27,7 +27,8 @@ def test_rfc_fit_predict():
     X, y = separate_features_outcome(df, {"target": dataclass.target})
     rfc.fit(X, y)
     assert type(rfc.__getattribute__("_model")) == sklearn.ensemble._forest.RandomForestClassifier
-    rfc.predict(X, y)
+    y_pred = rfc.predict(X)
+    assert y.shape == y_pred.shape
 
 
 def test_stochastic_gradient_decent():
@@ -45,4 +46,5 @@ def test_sgd_fit_predict():
     X, y = separate_features_outcome(df, {"target": dataclass_sgd.target})
     sgd.fit(X, y)
     assert type(sgd.__getattribute__("_model")) == sklearn.linear_model._stochastic_gradient.SGDClassifier
-    sgd.predict(X, y)
+    y_pred = sgd.predict(X)
+    assert y.shape == y_pred.shape
