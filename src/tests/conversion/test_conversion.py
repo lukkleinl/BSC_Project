@@ -24,7 +24,7 @@ def test_convert_cells():
                   paths.output_path_converted_files)
 
     """load module of preprocessing step"""
-    module = importlib.import_module("converted_files.transform_data_func")
+    module = importlib.import_module("conversion.transform_data_func")
     assert module
     func = module.__getattribute__("transform_data_func")
 

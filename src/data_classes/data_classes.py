@@ -2,8 +2,6 @@ from array import array
 from dataclasses import dataclass
 from typing import Optional
 
-import data_classes
-
 
 @dataclass
 class Paths:
@@ -17,7 +15,7 @@ class Paths:
 
 
 @dataclass
-class Dataset:
+class TrainTestSplit:
     """Parameters for train test split"""
     target: str
     parameter_train_test_split: Optional[array] = None
@@ -42,7 +40,7 @@ class Loader:
         if needed to load the data"""
 
     name: str
-    name_of_file: str
+    path_to_csv: Optional[str] = None
     url: Optional[str] = None
 
 
@@ -63,10 +61,11 @@ class PrepStep:
        or from recently converted files"""
 
     """location has to be specified with a dot. For instance preprocessing."""
-    location_of_step: str
+
     name_of_step: str
     name_of_module: str
     conversion: bool
+    prior_to_split: bool
     params: Optional[dict] = None
 
 
@@ -80,21 +79,20 @@ class PreprocessingSteps:
         """
         creates a list of the specified preprocessing steps
 
-        :param prepr_steps: Dictionary of Preprocessing steps
+        preprocessing_steps: Dictionary of Preprocessing steps
+
+        :param
         :return: list of preprocessing steps
         """
 
         """getting the names"""
-        steps_names = [test for test in self.names_of_steps]
+        steps_names = [step for step in self.names_of_steps]
 
         """creating list of steps"""
         preprocessing_step = []
         for step in steps_names:
             """Create Preprocessing Step"""
-            prep_step = PrepStep(self.names_of_steps[step]["params"]["location_of_step"],
-                                 self.names_of_steps[step]["params"]["name_of_step"],
-                                 self.names_of_steps[step]["params"]["name_of_module"],
-                                 **self.names_of_steps[step])
+            prep_step = PrepStep(**self.names_of_steps[step])
 
             """Append it to array"""
             preprocessing_step.append(prep_step)

@@ -1,9 +1,8 @@
 import pickle
 from abc import abstractmethod, ABC
 
-from sklearn.linear_model import SGDClassifier
 from sklearn.ensemble import RandomForestClassifier as RFC_Sklearn
-from sklearn.metrics import accuracy_score, mean_squared_error, confusion_matrix
+from sklearn.linear_model import SGDClassifier
 
 from data_classes.data_classes import Model
 
@@ -27,7 +26,7 @@ class BaseAlgorithm(ABC):
         """
         pickle.dump(model, open(self._model_path, 'wb'))
 
-    def _load_model(self):
+    def load_model(self):
         """
 
         :return:

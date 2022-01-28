@@ -5,8 +5,8 @@ from sklearn.model_selection import train_test_split
 import algorithms
 from algorithms import algorithms_creation
 from main import load_configuration
-from preprocessing.data_loader import create_loader
-from preprocessing.transform_data import separate_features_outcome
+from loader.data_loader import create_loader
+from preprocessing.preprocessing_functions import separate_features_outcome
 
 paths, loader, model, dataclass, prepr_steps_after, prepr_steps_prior, converter = load_configuration("src/tests/data/config_files"
                                                                                            "/test_config_rfc.yaml")

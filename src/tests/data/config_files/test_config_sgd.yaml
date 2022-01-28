@@ -4,7 +4,7 @@ Paths:
    processed_path: "src/tests/data/processed/"
    model_path: "src/tests/data/model/"
    notebook_path: "src/tests/data/notebooks/Wine_Quality/"
-   output_path_converted_files: "src/tests/converted_files/"
+   output_path_converted_files: "src/tests/conversion/"
 
 Converter:
   convert_preprocessing_steps: False
@@ -17,7 +17,7 @@ Preprocessing_Steps_pre_split:
   transform_data_func:
     conversion: True
     params:
-      location_of_step: "converted_files."
+      location_of_step: "conversion."
       name_of_step: "transform_data_func"
       name_of_module: "transform_data_func"
       target: "quality"

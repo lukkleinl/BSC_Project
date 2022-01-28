@@ -45,12 +45,3 @@ def scale_data(df: pd.DataFrame, params: dict):
     return df
 
 
-def separate_features_outcome(df: pd.DataFrame, params: dict):
-    """
-    Separates the features from the target
-
-    :param df: Dataframe which should be separated
-    :param params: target: specifies the target column
-    :return: separated Dataframes
-    """
-    return df.drop(params["target"], axis=1).to_numpy(), df[params["target"]]

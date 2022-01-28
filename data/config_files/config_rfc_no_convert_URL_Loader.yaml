@@ -1,10 +1,10 @@
 Paths:
-   raw_data_path: "src/tests/data/raw/"
-   preprocessing_path: "src/tests/data/preprocessed/"
-   processed_path: "src/tests/data/processed/"
-   model_path: "src/tests/data/model/"
-   notebook_path: "src/tests/data/notebooks/Wine_Quality/"
-   output_path_converted_files: "src/tests/conversion/"
+   raw_data_path: "../data/raw/"
+   preprocessing_path: "../data/preprocessed/"
+   processed_path: "../data/processed/"
+   model_path: "../data/model/"
+   notebook_path: "../data/notebooks/Wine_Quality/"
+   output_path_converted_files: "../conversion/"
 
 Converter:
   convert_preprocessing_steps: False
@@ -13,27 +13,19 @@ Converter:
   preprocessing_tags:
     - "transform_data_func"
 
-Preprocessing_Steps_pre_split:
-  transform_data_func:
-    conversion: True
-    params:
-      location_of_step: "conversion."
-      name_of_step: "transform_data_func"
-      name_of_module: "transform_data_func"
-      target: "quality"
-
-Preprocessing_Steps_after_split:
+Preprocessing_Steps:
+  target: "quality"
   scale_data:
     conversion: False
+    prior_to_split: False
     params:
-      location_of_step: "preprocessing."
+      location_of_step: "preprocessing_functions."
       name_of_step: "scale_data"
       name_of_module: "transform_data"
       scaler_name: "StandardScaler"
 
 Loader:
   name: "URLLoader"
-  name_of_file: "raw_data.csv"
   url: "https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv"
 
 Dataset:

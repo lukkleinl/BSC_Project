@@ -4,7 +4,7 @@ Paths:
    processed_path: "data/processed/"
    model_path: "data/model/"
    notebook_path: "data/notebooks/Wine_Quality/"
-   output_path_converted_files: "converted_files/"
+   output_path_converted_files: "conversion/"
 
 Converter:
   convert_preprocessing_steps: False
@@ -14,12 +14,12 @@ Converter:
     - "transform_data_func"
 
 Preprocessing_Steps_pre_split:
-  transform_data:
-    conversion: False
+  transform_data_func:
+    conversion: True
     params:
-      location_of_step: "preprocessing."
-      name_of_step: "binary_classification_and_label_encoding"
-      name_of_module: "transform_data"
+      location_of_step: "conversion."
+      name_of_step: "transform_data_func"
+      name_of_module: "transform_data_func"
       target: "quality"
 
 Preprocessing_Steps_after_split:
@@ -43,8 +43,8 @@ Dataset:
     - 42
 
 Model:
-  file_name: "rf_model_new.obj"
-  ensemble_model: "RandomForestClassifier"
+  file_name: "sgd_model_new.obj"
+  ensemble_model: "StochasticGradientDecent"
   model_config: {n_estimators: 100, random_state: 42}
   export_result: True
 
