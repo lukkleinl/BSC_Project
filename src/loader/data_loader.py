@@ -4,7 +4,6 @@ import sys
 import urllib.request
 from abc import ABC, abstractmethod
 
-import click
 import pandas as pd
 
 from data_classes.data_classes import Loader

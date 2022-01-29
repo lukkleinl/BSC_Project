@@ -1,8 +1,8 @@
 import importlib
 import json
 import sys
-
 import pandas as pd
+
 from sklearn.model_selection import train_test_split
 
 from data_classes import data_classes
@@ -104,4 +104,3 @@ def main(preprocessing_steps_path):
 
     preprocessing_steps = PreprocessingSteps(**preprocessing_steps)
     preprocess_data(df, preprocessing_steps, "quality")
-

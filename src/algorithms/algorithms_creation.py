@@ -7,7 +7,7 @@ import pandas as pd
 from sklearn.metrics import mean_squared_error, accuracy_score, confusion_matrix
 
 from algorithms.algorithms_implementation import RandomForestClassifier, StochasticGradientDecentClassifier
-from data_classes.data_classes import Model, Paths
+from data_classes.data_classes import Model, TrainTestSplit
 
 
 class AlgorithmFactory(ABC):
@@ -69,7 +69,7 @@ def create_algorithm(algorithm: str) -> AlgorithmFactory:
         sys.exit(f"algorithm name was not recognized {algorithm}")
 
 
-def separate_features_outcome(df: pd.DataFrame, params: dict):
+def separate_features_outcome(df: pd.DataFrame, target: str):
     """
     Separates the features from the target
 
@@ -77,7 +77,7 @@ def separate_features_outcome(df: pd.DataFrame, params: dict):
     :param params: target: specifies the target column
     :return: separated Dataframes
     """
-    return df.drop(params["target"], axis=1).to_numpy(), df[params["target"]]
+    return df.drop(target, axis=1).to_numpy(), df[target]
 
 
 def main(model_path: str, train_test_split_path: str):
@@ -89,16 +89,15 @@ def main(model_path: str, train_test_split_path: str):
         train_test_split = json.load(file)
 
     model = Model(**model)
-
+    train_test_split = TrainTestSplit(**train_test_split)
     # train_size = train_test_split.parameter_train_test_split[0]
     # random_state = train_test_split.parameter_train_test_split[1]
-    print(train_test_split)
 
     train = pd.read_csv("data/processed/train.csv")
     test = pd.read_csv("data/processed/test.csv")
 
-    train_features, train_labels = separate_features_outcome(train, {"target": "quality"})
-    test_features, test_labels = separate_features_outcome(test, {"target": "quality"})
+    train_features, train_labels = separate_features_outcome(train, train_test_split.target)
+    test_features, test_labels = separate_features_outcome(test, train_test_split.target)
 
     """Create Factory for specified Model"""
     factory = create_algorithm(model.ensemble_model)

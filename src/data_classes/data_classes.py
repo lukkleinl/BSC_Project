@@ -29,6 +29,7 @@ class Converter:
 
     convert_preprocessing_steps: bool
     parameter_conversion: bool
+    location_of_notebook: Optional[str] = None
     notebook_name: Optional[str] = None
     preprocessing_tags: Optional[array] = None
 

@@ -1,12 +1,5 @@
-Paths:
-   raw_data_path: "data/raw/"
-   preprocessing_path: "data/preprocessed/"
-   processed_path: "data/processed/"
-   model_path: "data/model/"
-   notebook_path: "data/notebooks/Wine_Quality/"
-   output_path_converted_files: "conversion/"
-
 Converter:
+  location_of_notebook: "data/notebooks/Wine_Quality/"
   convert_preprocessing_steps: False
   parameter_conversion: False
   notebook_name: "prediction-of-quality-of-wine.ipynb"
@@ -47,7 +40,7 @@ TrainTestSplit:
 Model:
   file_name: "rf_model_new.obj"
   ensemble_model: "RandomForestClassifier"
-  model_config: {n_estimators: 100, random_state: 42}
+  model_config: {n_estimators: 100, criterion: "entropy"}
   export_result: True
 
 

@@ -4,9 +4,9 @@ from sklearn.preprocessing import LabelEncoder, StandardScaler, MinMaxScaler, Ro
 
 def binary_classification_and_label_encoding(df: pd.DataFrame, params: dict):
     """
-    Groups the target colum into binaray classifiers good and bad
+    Groups the target colum into binary classifiers good and bad
 
-    :param df: Dataframe whih should be transformed
+    :param df: Dataframe which should be transformed
     :param params: target Specifies the target column
     :return: transformed Dataset
     """
@@ -43,5 +43,3 @@ def scale_data(df: pd.DataFrame, params: dict):
         print("Scaler doesn't exist")
 
     return df
-
-

@@ -5,7 +5,7 @@ from conversion import conversion_functions
 from data_classes import data_classes
 
 
-def get_parameter(config):
+def _get_parameter(config):
     """
     loads the parameters either from yaml file or from the specified notebook"
     :param config: Configuration file
@@ -13,17 +13,17 @@ def get_parameter(config):
     """
 
     converter = data_classes.Converter(**config["Converter"])
-    paths = data_classes.Paths(**config["Paths"])
 
     """Deciding on where to load parameter from"""
     if converter.parameter_conversion:
-        params_nb = conversion_functions.get_parameters_from_notebook(paths.notebook_path + converter.notebook_name)
+        params_nb = conversion_functions.get_parameters_from_notebook(converter.location_of_notebook +
+                                                                      converter.notebook_name)
         return params_nb
     else:
         return config
 
 
-def load_configuration(config_file):
+def _load_configuration(config_file):
     """
     loads data from specified config file
     and maps it to the defined data classes
@@ -35,7 +35,7 @@ def load_configuration(config_file):
     """
     try:
         conf = conversion_functions.get_config_from_yaml(config_file)
-        params = get_parameter(conf)
+        params = _get_parameter(conf)
         loader = data_classes.Loader(**params["Loader"])
         model = data_classes.Model(**params["Model"])
         train_test_split = data_classes.TrainTestSplit(**params["TrainTestSplit"])
@@ -55,7 +55,7 @@ def get_config(config_file: str):
     :param config_file:
     :return:
     """
-    config_classes = load_configuration(config_file)
+    config_classes = _load_configuration(config_file)
 
     for dataclass in config_classes:
         with open("data/configuration/" + type(dataclass).__name__ + ".json", 'w') as file:
