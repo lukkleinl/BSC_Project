@@ -93,10 +93,12 @@ class RandomForestClassifier(BaseAlgorithm):
         :param labels:
         :return:
         """
+
         try:
             self._model = RFC_Sklearn(n_estimators=self._n_estimators, random_state=self._random_state,
                                       criterion=self._criterion, max_depth=self._max_depth,
                                       max_features=self._max_features)
+            self._model.fit(features,labels)
         except KeyError as err:
             sys.exit(f"  wrong key {err} for the Random Forest")
 

@@ -82,8 +82,12 @@ def preprocess_data(df, preprocessing_steps: PreprocessingSteps, traintestsplit:
 
     df.to_csv(output_path_processed + "processed.csv")
     """Parameter Specification and train tes split"""
-    test_size = traintestsplit.parameter_train_test_split[0]
-    random_state = traintestsplit.parameter_train_test_split[1]
+    try:
+        test_size = traintestsplit.parameter_train_test_split["test_size"]
+        random_state = traintestsplit.parameter_train_test_split["random_state"]
+    except KeyError as err:
+        sys.exit(f"{err} nicht spezifiziert ")
+
     x_train, x_test, y_train, y_test = model_selection.train_test_split(features, labels, test_size=test_size,
                                                                         random_state=random_state)
 

@@ -24,9 +24,8 @@ Preprocessing_Steps:
       scaler_name: "StandardScaler"
 
 Loader:
-  name: "ConvertedLoader"
-  name_of_module: "loader"
-  name_of_class: "CSVLoader"
+  name: "CSVLoader"
+  path_to_csv: "../data/Wine_data/raw_data.csv"
 
 TrainTestSplit:
   target: "quality"

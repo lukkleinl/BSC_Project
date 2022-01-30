@@ -3,6 +3,8 @@ Converter:
   convert_preprocessing_steps: False
   parameter_conversion: False
   notebook_name: "8_random_forests_for_classification.ipynb"
+  conversion_tags:
+    - "elec_loader"
 
 Preprocessing_Steps:
   scale_data:

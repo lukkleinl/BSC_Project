@@ -1,1 +1,1 @@
-{"target": "class", "parameter_train_test_split": [0.25, 20]}
+{"target": "quality", "parameter_train_test_split": {"test_size": 0.2, "random_state": 42}}

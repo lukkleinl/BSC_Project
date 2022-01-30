@@ -1,17 +1,13 @@
 Converter:
-  location_of_notebook: "../data/notebooks/Wine_Quality/"
   convert_preprocessing_steps: False
   parameter_conversion: False
-  notebook_name: "prediction-of-quality-of-wine.ipynb"
-  preprocessing_tags:
-    - "transform_data_func"
 
 Preprocessing_Steps:
   transform_data:
-    conversion: False
+    conversion: True
     prior_to_split: True
-    name_of_step: "binary_classification_and_label_encoding"
-    name_of_module: "transform_data"
+    name_of_step: "transform_data_func"
+    name_of_module: "transform_data_func"
     params:
       target: "quality"
 
@@ -30,13 +26,13 @@ Loader:
 TrainTestSplit:
   target: "quality"
   parameter_train_test_split:
-    - 0.2
-    - 42
+    "test_size": 0.2
+    "random_state": 42
 
 Model:
   file_name: "rf_model_new.obj"
   ensemble_model: "RandomForestClassifier"
-  model_config: {n_estimators: 100, criterion: "entropy"}
+  model_config: {n_estimators: 100,random_state: 42}
   export_result: True
 
 
