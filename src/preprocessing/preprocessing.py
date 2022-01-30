@@ -3,10 +3,10 @@ import json
 import sys
 import pandas as pd
 
-from sklearn.model_selection import train_test_split
+from sklearn import model_selection
 
 from data_classes import data_classes
-from data_classes.data_classes import PreprocessingSteps
+from data_classes.data_classes import PreprocessingSteps, TrainTestSplit
 
 
 def import_and_load_preprocessing_function(preprocessing_step: data_classes.PrepStep, df: pd.DataFrame):
@@ -42,18 +42,20 @@ def import_and_load_preprocessing_function(preprocessing_step: data_classes.Prep
     return df
 
 
-def separate_features_outcome(df: pd.DataFrame, params: dict):
+def separate_features_outcome(df: pd.DataFrame, target: str):
     """
     Separates the features from the target
 
+    :param target:
     :param df: Dataframe which should be separated
-    :param params: target: specifies the target column
     :return: separated Dataframes
     """
-    return df.drop(params["target"], axis=1).to_numpy(), df[params["target"]]
+    features = df.drop(target, axis=1)
+    labels = df[target]
+    return features, labels
 
 
-def preprocess_data(df, preprocessing_steps: PreprocessingSteps, target: str):
+def preprocess_data(df, preprocessing_steps: PreprocessingSteps, traintestsplit: TrainTestSplit):
     """Preprocess Data prior to separation of features"""
 
     """path definition on where to output the dataframes for each step"""
@@ -68,7 +70,7 @@ def preprocess_data(df, preprocessing_steps: PreprocessingSteps, target: str):
             df.to_csv(output_path_preprocessing + step.name_of_step + ".csv")
 
     """Separate Feature and Outcome + scale Data"""
-    features, labels = separate_features_outcome(df, {"target": target})
+    features, labels = separate_features_outcome(df, traintestsplit.target)
 
     """Preprocess Data after separation of features"""
     for step in preprocessing_steps:
@@ -80,10 +82,10 @@ def preprocess_data(df, preprocessing_steps: PreprocessingSteps, target: str):
 
     df.to_csv(output_path_processed + "processed.csv")
     """Parameter Specification and train tes split"""
-    # train_size = dataclass.parameter_train_test_split[0]
-    # random_state = dataclass.parameter_train_test_split[1]
-    x_train, x_test, y_train, y_test = train_test_split(features, labels, test_size=0.2,
-                                                        random_state=42)
+    test_size = traintestsplit.parameter_train_test_split[0]
+    random_state = traintestsplit.parameter_train_test_split[1]
+    x_train, x_test, y_train, y_test = model_selection.train_test_split(features, labels, test_size=test_size,
+                                                                        random_state=random_state)
 
     """join and export to csv"""
     df_train = x_train.join(y_train)
@@ -93,7 +95,7 @@ def preprocess_data(df, preprocessing_steps: PreprocessingSteps, target: str):
     return x_train, x_test, y_train, y_test
 
 
-def main(preprocessing_steps_path):
+def main(preprocessing_steps_path, train_test_split_path):
     """"""
     path_to_raw_data = "data/raw/raw_data.csv"
 
@@ -102,5 +104,9 @@ def main(preprocessing_steps_path):
     with open(preprocessing_steps_path, 'r') as file:
         preprocessing_steps = json.load(file)
 
+    with open(train_test_split_path, 'r') as file:
+        train_test_split = json.load(file)
+
     preprocessing_steps = PreprocessingSteps(**preprocessing_steps)
-    preprocess_data(df, preprocessing_steps, "quality")
+    train_test_split = TrainTestSplit(**train_test_split)
+    preprocess_data(df, preprocessing_steps, train_test_split)

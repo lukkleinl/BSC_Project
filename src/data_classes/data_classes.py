@@ -1,17 +1,6 @@
 from array import array
-from dataclasses import dataclass
 from typing import Optional
-
-
-@dataclass
-class Paths:
-    """stores the paths to the needed folders"""
-    raw_data_path: str
-    preprocessing_path: str
-    processed_path: str
-    model_path: str
-    notebook_path: str
-    output_path_converted_files: Optional[str] = None
+from dataclasses import dataclass
 
 
 @dataclass
@@ -40,8 +29,19 @@ class Loader:
         which loader should be used and an url can be specified
         if needed to load the data"""
 
+    """name of the desired loader"""
     name: str
+
+    """used when loader is from conversion"""
+    name_of_module: Optional[str] = None
+
+    """used when loader is from conversion"""
+    name_of_class: Optional[str] = None
+
+    """specifies the path to the csv file where the data is stored"""
     path_to_csv: Optional[str] = None
+
+    """specifies the URL from where the data is loaded"""
     url: Optional[str] = None
 
 
@@ -53,6 +53,8 @@ class Model:
     model_config: Optional[dict] = None
     export_result: Optional[bool] = False
     conversion: Optional[bool] = False
+    name_of_class: Optional[str] = None
+    name_of_module: Optional[str] = None
 
 
 @dataclass

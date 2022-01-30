@@ -4,10 +4,11 @@ import sys
 from abc import ABC, abstractmethod
 
 import pandas as pd
-from sklearn.metrics import mean_squared_error, accuracy_score, confusion_matrix
+from sklearn.metrics import mean_squared_error, accuracy_score, confusion_matrix, classification_report
 
 from algorithms.algorithms_implementation import RandomForestClassifier, StochasticGradientDecentClassifier
 from data_classes.data_classes import Model, TrainTestSplit
+from preprocessing.preprocessing import separate_features_outcome
 
 
 class AlgorithmFactory(ABC):
@@ -37,16 +38,16 @@ class ConvertedAlgorithmFactory(AlgorithmFactory):
 
     def get_algorithm(self, model: Model, out_path: str):
         """load module of preprocessing step"""
-        module = importlib.import_module("conversion.algorithm")
+        module = importlib.import_module("conversion." + model.name_of_module)
 
         """tries to load function with given name and execute it"""
         try:
-            loader_class = module.__getattribute__("CSVLoader")
-            loader_class = loader_class()
+            algorithm_class = module.__getattribute__(model.name_of_class)
+            algorithm_class = algorithm_class(model, out_path)
         except AttributeError as err:
             sys.exit(f"specified {err}")
 
-        return loader_class
+        return algorithm_class
 
 
 def create_algorithm(algorithm: str) -> AlgorithmFactory:
@@ -67,17 +68,6 @@ def create_algorithm(algorithm: str) -> AlgorithmFactory:
         return factories[algorithm]
     else:
         sys.exit(f"algorithm name was not recognized {algorithm}")
-
-
-def separate_features_outcome(df: pd.DataFrame, target: str):
-    """
-    Separates the features from the target
-
-    :param df: Dataframe which should be separated
-    :param params: target: specifies the target column
-    :return: separated Dataframes
-    """
-    return df.drop(target, axis=1).to_numpy(), df[target]
 
 
 def main(model_path: str, train_test_split_path: str):
@@ -110,3 +100,4 @@ def main(model_path: str, train_test_split_path: str):
     print(accuracy_score(test_labels, y_predicted))
     print(mean_square_error)
     print(confusion_matrix(test_labels, y_predicted))
+    print(classification_report(test_labels, y_predicted))
