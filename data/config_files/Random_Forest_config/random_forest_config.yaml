@@ -1,0 +1,33 @@
+Converter:
+  location_of_notebook: "../data/notebooks/"
+  convert_preprocessing_steps: False
+  parameter_conversion: False
+  notebook_name: "8_random_forests_for_classification.ipynb"
+  conversion_tags:
+    - "elec_loader"
+
+Preprocessing_Steps:
+  scale_data:
+    conversion: False
+    prior_to_split: True
+    name_of_step: "label_encoder"
+    name_of_module: "transform_data"
+    params:
+      target: "class"
+
+Loader:
+  name: "ConvertedLoader"
+  name_of_class: "elec_loader"
+  name_of_module: "iris_loader"
+
+TrainTestSplit:
+  target: "class"
+  parameter_train_test_split:
+    - 0.25
+    - 20
+
+Model:
+  file_name: "rf_model_new.obj"
+  ensemble_model: "RandomForestClassifier"
+  model_config: {n_estimators: 100,random_state: 42}
+  export_result: True

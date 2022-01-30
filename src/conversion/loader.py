@@ -1,13 +1,12 @@
+import numpy as np
 import pandas as pd
 
+from sklearn import datasets
 
-class CSVLoader:
-    """loads a csv file from a given location"""
-    filename = "../data/raw/raw_data.csv"
-    path_to_csv = "../../data/Wine_data/raw_data.csv"
-    seperator = ";"
 
+class iris_loader:
     def create_raw_data(self):
-        df = pd.read_csv(self.path_to_csv, sep=self.seperator)
-        df.to_csv(self.filename)
-        # return pd.read_csv(self.path_to_csv, sep=self.seperator)
+        iris = datasets.load_iris()
+        data = pd.DataFrame(data=np.c_[iris['data'], iris['target']],
+                            columns=iris['feature_names'] + ['target'])
+        return data

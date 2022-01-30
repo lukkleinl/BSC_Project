@@ -107,12 +107,12 @@ class ConvertedLoaderFactory(LoaderFactory):
         :return:
         """
         """load module of preprocessing step"""
-        module = importlib.import_module("conversion.loader")
+        module = importlib.import_module("conversion." + loader.name_of_module)
 
         """tries to load function with given name and execute it"""
         try:
-            loader_class = module.__getattribute__("CSVLoader")
-            loader_class = loader_class()
+            loader_class = module.__getattribute__(loader.name_of_class)
+            loader_class = loader_class(loader)
         except AttributeError as err:
             sys.exit(f"specified {err}")
 

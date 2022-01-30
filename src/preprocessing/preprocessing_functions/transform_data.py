@@ -21,6 +21,13 @@ def binary_classification_and_label_encoding(df: pd.DataFrame, params: dict):
     return df
 
 
+def label_encoder(df: pd.DataFrame, params: dict):
+    label_enc = LabelEncoder()
+    target = params["target"]
+    df[target] = label_enc.fit_transform(df[target])
+    return df
+
+
 def scale_data(df: pd.DataFrame, params: dict):
     """
     Scales data with the given Scalar
@@ -32,8 +39,8 @@ def scale_data(df: pd.DataFrame, params: dict):
 
     scaler_names = {
         "StandardScaler": StandardScaler(),
-        "RobustScalar": RobustScaler(),
-        "MinMaxScalar": MinMaxScaler()
+        "RobustScaler": RobustScaler(),
+        "MinMaxScaler": MinMaxScaler()
     }
 
     if params["scaler_name"] in scaler_names:
