@@ -1,12 +1,4 @@
 def get_params_notebook():
-    Paths = {
-        "raw_data_path": "data/raw/",
-        "preprocessing_path": "data/preprocessed/",
-        "processed_path": "data/processed/",
-        "model_path": "data/model/",
-        "notebook_path": "data/notebooks/Wine_Quality"
-    }
-
     Converter = {
         "convert_preprocessing_steps": True,
         "parameter_conversion": True,
@@ -59,7 +51,6 @@ def get_params_notebook():
     }
 
     params = dict()
-    params.update({"Paths": Paths, "Converter": Converter, "Loader": Loader, "Preprocessing_Steps": Preprocessing_Steps,
-                   "Dataset": Dataset, "Model": Model})
+    params.update({"Converter": Converter, "Loader": Loader, "Preprocessing_Steps": Preprocessing_Steps})
 
     return params

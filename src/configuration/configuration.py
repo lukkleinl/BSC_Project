@@ -23,7 +23,7 @@ def _get_parameter(config):
         return config
 
 
-def _load_configuration(config_file):
+def load_configuration(config_file):
     """
     loads data from specified config file
     and maps it to the defined data classes
@@ -43,6 +43,8 @@ def _load_configuration(config_file):
         preprocessing_steps = data_classes.PreprocessingSteps(params["Preprocessing_Steps"])
     except KeyError as err:
         sys.exit(f"Parameters don't match with implemented classes in the following class {err}")
+    except TypeError as err:
+        sys.exit(f"Missing argument {err}")
     except FileNotFoundError as err:
         sys.exit(f"Specified file not found {err}")
 
@@ -55,7 +57,7 @@ def get_config(config_file: str):
     :param config_file:
     :return:
     """
-    config_classes = _load_configuration(config_file)
+    config_classes = load_configuration(config_file)
 
     for dataclass in config_classes:
         with open("data/configuration/" + type(dataclass).__name__ + ".json", 'w') as file:

@@ -64,6 +64,7 @@ def preprocess_data(df, preprocessing_steps: PreprocessingSteps, traintestsplit:
 
     preprocessing_steps = preprocessing_steps.get_list_of_preprocessing_steps()
 
+    """Preprocess Data prior to seperation of features"""
     for step in preprocessing_steps:
         if step.prior_to_split:
             df = import_and_load_preprocessing_function(step, df)

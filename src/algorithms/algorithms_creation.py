@@ -95,6 +95,13 @@ def main(model_path: str, train_test_split_path: str):
     """Train and predict Model"""
     training_algorithm = factory.get_algorithm(model, "data/model/" + model.file_name)
     training_algorithm.fit(train_features, train_labels)
+    y_predicted = training_algorithm.predict(train_features)
+    mean_square_error = mean_squared_error(train_labels, y_predicted)
+    print(accuracy_score(train_labels, y_predicted))
+    print(mean_square_error)
+    print(confusion_matrix(train_labels, y_predicted))
+    print(classification_report(train_labels, y_predicted))
+
     y_predicted = training_algorithm.predict(test_features)
     mean_square_error = mean_squared_error(test_labels, y_predicted)
     print(accuracy_score(test_labels, y_predicted))

@@ -30,7 +30,7 @@ TrainTestSplit:
 Model:
   file_name: "rf_model_new.obj"
   ensemble_model: "ConvertedAlgorithm"
-  model_config: {n_estimators: 100, criterion: "entropy"}
+  model_config: {}
   export_result: True
   name_of_module: "model"
   name_of_class: "grid"

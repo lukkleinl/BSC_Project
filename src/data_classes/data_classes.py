@@ -50,7 +50,7 @@ class Model:
     """Specifies the credentials for the ensemble model which should be used"""
     file_name: str
     ensemble_model: str
-    model_config: Optional[dict] = None
+    model_config: dict
     export_result: Optional[bool] = False
     conversion: Optional[bool] = False
     name_of_class: Optional[str] = None

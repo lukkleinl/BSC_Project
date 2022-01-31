@@ -55,6 +55,12 @@ class RandomForestClassifier(BaseAlgorithm):
     """The number of features to consider when looking for the best split"""
     _max_features = "auto"
 
+    """Best nodes are defined as relative reduction in impurity"""
+    _max_leaf_nodes = None
+
+    """The minimum number of samples required to be at a leaf node"""
+    _min_samples_leaf = 1
+
     """The function to measure the quality of a split"""
     """gini or entropy are supported within the sklearn implementation"""
     _criterion = "gini"
@@ -86,6 +92,12 @@ class RandomForestClassifier(BaseAlgorithm):
         if "random_state" in model.model_config:
             self._model_random_state = model.model_config["random_state"]
 
+        if "max_leaf_nodes" in model.model_config:
+            self._max_leaf_nodes = model.model_config["max_leaf_nodes"]
+
+        if "min_samples_leaf" in model.model_config:
+            self._min_samples_leaf = model.model_config["min_samples_leaf"]
+
     def fit(self, features, labels):
         """
 
@@ -97,7 +109,8 @@ class RandomForestClassifier(BaseAlgorithm):
         try:
             self._model = RFC_Sklearn(n_estimators=self._n_estimators, random_state=self._random_state,
                                       criterion=self._criterion, max_depth=self._max_depth,
-                                      max_features=self._max_features)
+                                      max_features=self._max_features, min_samples_leaf=self._min_samples_leaf,
+                                      max_leaf_nodes=self._max_leaf_nodes)
             self._model.fit(features,labels)
         except KeyError as err:
             sys.exit(f"  wrong key {err} for the Random Forest")

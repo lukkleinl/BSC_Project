@@ -35,8 +35,8 @@ def convert_cells(path_notebook: str, processing_step: str, output_path: str):
             python_string_to_convert += cell["source"]
             python_string_to_convert += "\n"
 
-    if not os.path.exists(output_path):
-        os.mkdir(output_path)
+    # if not os.path.exists(output_path):
+    #     os.mkdir(output_path)
 
     f = open(output_path + processing_step + ".py", "w")
     f.write(python_string_to_convert)

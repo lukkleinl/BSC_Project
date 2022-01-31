@@ -1,1 +1,1 @@
-{"name": "CSVLoader", "name_of_module": null, "name_of_class": null, "path_to_csv": "../data/Wine_data/raw_data.csv", "url": null}
+{"name": "ConvertedLoader", "name_of_module": "iris_loader", "name_of_class": "elec_loader", "path_to_csv": null, "url": null}

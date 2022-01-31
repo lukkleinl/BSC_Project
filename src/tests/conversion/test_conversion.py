@@ -1,39 +1,49 @@
 import importlib
+import sys
 
 import pytest
 import yaml
 
+from configuration.configuration import load_configuration
 from conversion.conversion_functions import get_config_from_yaml, convert_cells, get_parameters_from_notebook
-from main import load_configuration
-from tests.conversion.parameters_from_notebook import get_params_notebook
 
-paths, loader, model, dataclass, prepr_steps_after, prepr_steps_prior, converter = load_configuration(
-    "src/tests/data/config_files"
-    "/test_config_rfc.yaml")
+data_classes_rfc = load_configuration("src/tests/data/config_files/config_rfc_convert_functions_CSV_Loader.yaml")
+
+for dataclass in data_classes_rfc:
+    if type(dataclass).__name__ == "Converter":
+        converter = dataclass
 
 
 def test_get_config_from_yaml():
-    params = get_config_from_yaml("src/tests/data/config_files/test_config_rfc.yaml")
-    with open("src/tests/data/config_files/test_config_rfc.yaml") as file:
+    params = get_config_from_yaml("src/tests/data/config_files/config_rfc_convert_functions_CSV_Loader.yaml")
+    with open("src/tests/data/config_files/config_rfc_convert_functions_CSV_Loader.yaml") as file:
         test_params = yaml.load(file, Loader=yaml.FullLoader)
     assert params == test_params
 
 
 def test_convert_cells():
-    convert_cells(paths.notebook_path + converter.notebook_name, "transform_data_func",
-                  paths.output_path_converted_files)
+    convert_cells("src/tests/data/notebooks/" + converter.notebook_name, "transform_data_func", "src/tests/conversion/")
 
     """load module of preprocessing step"""
     module = importlib.import_module("conversion.transform_data_func")
-    assert module
-    func = module.__getattribute__("transform_data_func")
+
+    assert module.__name__ == "conversion.transform_data_func"
 
 
 def test_parameters_from_notebook():
-    params = get_parameters_from_notebook(paths.notebook_path + converter.notebook_name)
-    parameter_from_function = get_params_notebook()
+    params = get_parameters_from_notebook("src/tests/data/notebooks/" + converter.notebook_name)
+    assert params["Loader"]
+    assert params["Converter"]
+    assert params["TrainTestSplit"]
+    assert params["Model"]
+    assert params["Preprocessing_Steps"]
 
-    assert params == parameter_from_function
+    with pytest.raises(KeyError):
+        params = get_parameters_from_notebook("src/tests/data/notebooks/" + "prediction-of-quality-of-wine_broken_params.ipynb")
+        assert params["Loader"]
+        assert params["Converter"]
+        assert params["TrainTestSplit"]
+        assert params["Model"]
 
     with pytest.raises(SystemExit):
-        get_parameters_from_notebook(paths.notebook_path + "prediction-of-quality-of-wine_without_params.ipynb")
+        get_parameters_from_notebook("src/tests/data/notebooks/" + "prediction-of-quality-of-wine_without_params.ipynb")
