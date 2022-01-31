@@ -7,9 +7,8 @@ from conversion import conversion_functions
 
 
 @click.command()
-@click.argument("config_file", type=str, default="../data/config_files/config_rfc_no_convert_CSV_Loader.yaml")
-@click.argument("notebook_path", type=str, default="../data/notebooks/")
-def convert_preprocessing_steps(config_file, notebook_path):
+@click.argument("config_file", type=str, default="../data/config_files/Wine_quality/config_sgd_convert_functions_loader_CSV_Loader.yaml")
+def convert_preprocessing_steps(config_file):
     output_path = "conversion/"
 
     try:
@@ -20,8 +19,9 @@ def convert_preprocessing_steps(config_file, notebook_path):
     except FileNotFoundError as err:
         sys.exit(f"Specified file not found {err}")
 
-    for processing_step in converter.preprocessing_tags:
-        conversion_functions.convert_cells(notebook_path + converter.notebook_name, processing_step, output_path)
+    if converter.preprocessing_tags is not None:
+        for processing_step in converter.preprocessing_tags:
+            conversion_functions.convert_cells(converter.location_of_notebook + converter.notebook_name, processing_step, output_path)
 
 
 if __name__ == "__main__":

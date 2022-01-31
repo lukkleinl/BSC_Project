@@ -56,7 +56,12 @@ def separate_features_outcome(df: pd.DataFrame, target: str):
 
 
 def preprocess_data(df, preprocessing_steps: PreprocessingSteps, traintestsplit: TrainTestSplit):
-    """Preprocess Data prior to separation of features"""
+    """Preprocess Data prior to separation of features
+
+    :param df:
+    :param preprocessing_steps:
+    :param traintestsplit:
+    """
 
     """path definition on where to output the dataframes for each step"""
     output_path_preprocessing = "data/preprocessed/"
@@ -101,7 +106,12 @@ def preprocess_data(df, preprocessing_steps: PreprocessingSteps, traintestsplit:
 
 
 def main(preprocessing_steps_path, train_test_split_path):
-    """"""
+    """Main program for preprocessing the data with defined steps
+
+    :param preprocessing_steps_path:
+    :param train_test_split_path:
+    :return:
+    """
     path_to_raw_data = "data/raw/raw_data.csv"
 
     df = pd.read_csv(path_to_raw_data)

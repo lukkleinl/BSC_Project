@@ -19,14 +19,17 @@ class BaseLoader(ABC):
 
     @abstractmethod
     def create_raw_data(self):
-        """used to load and create the raw data"""
+        """used to load and create the raw data
+
+        :return:
+        """
 
 
 class CSVLoader(BaseLoader):
     """loads a csv file from a given location"""
 
     def __init__(self, path_to_csv: str, seperator: str = ";"):
-        """
+        """Initiaizes the CSV loader
 
         :param path_to_csv:
         :param seperator:
@@ -35,6 +38,10 @@ class CSVLoader(BaseLoader):
         super(CSVLoader, self).__init__(seperator)
 
     def create_raw_data(self):
+        """Loads data from specified location and saves it
+
+        :return:
+        """
         df = pd.read_csv(self.path_to_csv, sep=self.seperator)
         df.to_csv(self.filename)
         # return pd.read_csv(self.path_to_csv, sep=self.seperator)
@@ -46,7 +53,7 @@ class URLLoader(BaseLoader):
     url: str
 
     def __init__(self, url, seperator: str = ";"):
-        """
+        """Initializes the URL Loader
 
         :param url:
         :param seperator:
@@ -55,7 +62,7 @@ class URLLoader(BaseLoader):
         super(URLLoader, self).__init__(seperator)
 
     def create_raw_data(self):
-        """
+        """creates raw data for experiment
 
         :return:
         """

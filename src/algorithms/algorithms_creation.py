@@ -23,6 +23,12 @@ class RandomForestFactory(AlgorithmFactory):
     """Factory to get a random forest classifier"""
 
     def get_algorithm(self, model: Model, out_path: str):
+        """ Creates a new object RFC Classifier and return it
+
+                :param model:
+                :param out_path:
+                :return: RFC Classifier
+                """
         return RandomForestClassifier(model, out_path)
 
 
@@ -30,17 +36,28 @@ class StochasticGradientDecentFactory(AlgorithmFactory):
     """Factory to get a Stochastic Gradient Decent Classifier"""
 
     def get_algorithm(self, model: Model, out_path: str):
+        """ Creates a new object SGD Classifier and return it
+
+        :param model:
+        :param out_path:
+        :return: SGD Classifier
+        """
         return StochasticGradientDecentClassifier(model, out_path)
 
 
 class ConvertedAlgorithmFactory(AlgorithmFactory):
-    """Factory to get a Stochastic Gradient Decent Classifier"""
+    """Factory to load a class from conversion dynamically"""
 
     def get_algorithm(self, model: Model, out_path: str):
-        """load module of preprocessing step"""
+        """load module dynamically of the specified class
+
+        :param model:
+        :param out_path:
+        :return: Model class from specified file
+        """
         module = importlib.import_module("conversion." + model.name_of_module)
 
-        """tries to load function with given name and execute it"""
+        """tries to load class with given name and execute it"""
         try:
             algorithm_class = module.__getattribute__(model.name_of_class)
             algorithm_class = algorithm_class(model, out_path)
@@ -71,12 +88,21 @@ def create_algorithm(algorithm: str) -> AlgorithmFactory:
 
 
 def main(model_path: str, train_test_split_path: str):
-    """Parameter Specification and train tes split"""
-    with open(model_path, 'r') as file:
-        model = json.load(file)
+    """Parameter Specification and train tes split
 
-    with open(train_test_split_path, 'r') as file:
-        train_test_split = json.load(file)
+    :param model_path:
+    :param train_test_split_path:
+    :return:
+    """
+
+    try:
+        with open(model_path, 'r') as file:
+            model = json.load(file)
+
+        with open(train_test_split_path, 'r') as file:
+            train_test_split = json.load(file)
+    except FileNotFoundError as err:
+        sys.exit(err)
 
     model = Model(**model)
     train_test_split = TrainTestSplit(**train_test_split)

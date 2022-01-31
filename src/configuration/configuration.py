@@ -50,8 +50,9 @@ def load_configuration(config_file):
 
 
 def get_config(config_file: str, path_to_data: str):
-    """
+    """Gets the Configuration File and saves each data class to a separate json file
 
+    :param path_to_data:
     :param config_file:
     :return:
     """
@@ -63,5 +64,10 @@ def get_config(config_file: str, path_to_data: str):
 
 
 def main(config_file: str):
+    """Starts creating json files based on the configuration file
+
+    :param config_file:
+    :return:
+    """
     path_to_data = "data/configuration/"
     get_config(config_file, path_to_data)

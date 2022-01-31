@@ -1,0 +1,40 @@
+Converter:
+  location_of_notebook: "src/tests/data/notebooks/"
+  convert_preprocessing_steps: True
+  parameter_conversion: False
+  notebook_name: "4_support_vector_machines_for_classification.ipynb"
+  preprocessing_tags:
+    - "iris_loader"
+    - "model"
+
+Preprocessing_Steps:
+  scale_data:
+    conversion: False
+    prior_to_split: False
+    name_of_step: "scale_data"
+    name_of_module: "transform_data"
+    params:
+      scaler_name: "MinMaxScaler"
+
+Loader:
+  name: "ConvertedLoader"
+  name_of_class: "iris_loader"
+  name_of_module: "iris_loader"
+
+TrainTestSplit:
+  target: "target"
+  parameter_train_test_split:
+    "test_size": 0.2
+    "random_state": 20
+
+Model:
+  file_name: "rf_model_new.obj"
+  ensemble_model: "ConvertedAlgorithm"
+  model_config: {}
+  name_of_module: "model"
+  name_of_class: "grid"
+
+
+
+
+

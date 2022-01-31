@@ -36,7 +36,15 @@ TrainTestSplit:
 Model:
   file_name: "rf_model_new.obj"
   ensemble_model: "RandomForestClassifier"
-  model_config: {n_estimators: 100}
+  model_config: {
+    n_estimators: 100,
+    random_state: 42,
+    criterion: "entropy",
+    min_samples_leaf: 2,
+    max_leaf_nodes: 2,
+    max_depth : 2,
+    max_features: 2
+  }
 
 
 

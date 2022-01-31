@@ -43,7 +43,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">algorithms package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-algorithms.algorithms_creation">algorithms.algorithms_creation module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-algorithms.algorithms_impl">algorithms.algorithms_impl module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#algorithms-algorithms-impl-module">algorithms.algorithms_impl module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-algorithms">Module contents</a></li>
 </ul>
 </li>
@@ -106,6 +106,30 @@
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="algorithms.algorithms_creation.ConvertedAlgorithmFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">algorithms.algorithms_creation.</span></span><span class="sig-name descname"><span class="pre">ConvertedAlgorithmFactory</span></span><a class="headerlink" href="#algorithms.algorithms_creation.ConvertedAlgorithmFactory" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#algorithms.algorithms_creation.AlgorithmFactory" title="algorithms.algorithms_creation.AlgorithmFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">algorithms.algorithms_creation.AlgorithmFactory</span></code></a></p>
+<p>Factory to load a class from conversion dynamically</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="algorithms.algorithms_creation.ConvertedAlgorithmFactory.get_algorithm">
+<span class="sig-name descname"><span class="pre">get_algorithm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="data_classes.html#data_classes.data_classes.Model" title="data_classes.data_classes.Model"><span class="pre">data_classes.data_classes.Model</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#algorithms.algorithms_creation.ConvertedAlgorithmFactory.get_algorithm" title="Permalink to this definition"></a></dt>
+<dd><p>load module dynamically of the specified class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – </p></li>
+<li><p><strong>out_path</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Model class from specified file</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="algorithms.algorithms_creation.RandomForestFactory">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">algorithms.algorithms_creation.</span></span><span class="sig-name descname"><span class="pre">RandomForestFactory</span></span><a class="headerlink" href="#algorithms.algorithms_creation.RandomForestFactory" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#algorithms.algorithms_creation.AlgorithmFactory" title="algorithms.algorithms_creation.AlgorithmFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">algorithms.algorithms_creation.AlgorithmFactory</span></code></a></p>
@@ -113,7 +137,18 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="algorithms.algorithms_creation.RandomForestFactory.get_algorithm">
 <span class="sig-name descname"><span class="pre">get_algorithm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="data_classes.html#data_classes.data_classes.Model" title="data_classes.data_classes.Model"><span class="pre">data_classes.data_classes.Model</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#algorithms.algorithms_creation.RandomForestFactory.get_algorithm" title="Permalink to this definition"></a></dt>
-<dd><p>returns the specified algorithm</p>
+<dd><p>Creates a new object RFC Classifier and return it</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – </p></li>
+<li><p><strong>out_path</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>RFC Classifier</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -126,7 +161,18 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="algorithms.algorithms_creation.StochasticGradientDecentFactory.get_algorithm">
 <span class="sig-name descname"><span class="pre">get_algorithm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="data_classes.html#data_classes.data_classes.Model" title="data_classes.data_classes.Model"><span class="pre">data_classes.data_classes.Model</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#algorithms.algorithms_creation.StochasticGradientDecentFactory.get_algorithm" title="Permalink to this definition"></a></dt>
-<dd><p>returns the specified algorithm</p>
+<dd><p>Creates a new object SGD Classifier and return it</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – </p></li>
+<li><p><strong>out_path</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>SGD Classifier</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -139,106 +185,26 @@
 :return:</p>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="algorithms.algorithms_creation.main">
+<span class="sig-prename descclassname"><span class="pre">algorithms.algorithms_creation.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_test_split_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#algorithms.algorithms_creation.main" title="Permalink to this definition"></a></dt>
+<dd><p>Parameter Specification and train tes split</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_path</strong> – </p></li>
+<li><p><strong>train_test_split_path</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="module-algorithms.algorithms_impl">
-<span id="algorithms-algorithms-impl-module"></span><h2>algorithms.algorithms_impl module<a class="headerlink" href="#module-algorithms.algorithms_impl" title="Permalink to this headline"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="algorithms.algorithms_impl.BaseAlgorithm">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">algorithms.algorithms_impl.</span></span><span class="sig-name descname"><span class="pre">BaseAlgorithm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="data_classes.html#data_classes.data_classes.Model" title="data_classes.data_classes.Model"><span class="pre">data_classes.data_classes.Model</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#algorithms.algorithms_impl.BaseAlgorithm" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
-<p>Base class for the implemented algorithms</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="algorithms.algorithms_impl.BaseAlgorithm.fit">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#algorithms.algorithms_impl.BaseAlgorithm.fit" title="Permalink to this definition"></a></dt>
-<dd><p>“Fits the data</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="algorithms.algorithms_impl.BaseAlgorithm.predict">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#algorithms.algorithms_impl.BaseAlgorithm.predict" title="Permalink to this definition"></a></dt>
-<dd><p>predicts on given data</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="algorithms.algorithms_impl.RandomForestClassifier">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">algorithms.algorithms_impl.</span></span><span class="sig-name descname"><span class="pre">RandomForestClassifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="data_classes.html#data_classes.data_classes.Model" title="data_classes.data_classes.Model"><span class="pre">data_classes.data_classes.Model</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#algorithms.algorithms_impl.RandomForestClassifier" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#algorithms.algorithms_impl.BaseAlgorithm" title="algorithms.algorithms_impl.BaseAlgorithm"><code class="xref py py-class docutils literal notranslate"><span class="pre">algorithms.algorithms_impl.BaseAlgorithm</span></code></a></p>
-<p>Random Forest Classifier algorithm</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="algorithms.algorithms_impl.RandomForestClassifier.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#algorithms.algorithms_impl.RandomForestClassifier.fit" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> – </p></li>
-<li><p><strong>y</strong> – </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="algorithms.algorithms_impl.RandomForestClassifier.predict">
-<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#algorithms.algorithms_impl.RandomForestClassifier.predict" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> – </p></li>
-<li><p><strong>y</strong> – </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="algorithms.algorithms_impl.StochasticGradientDecentClassifier">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">algorithms.algorithms_impl.</span></span><span class="sig-name descname"><span class="pre">StochasticGradientDecentClassifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="data_classes.html#data_classes.data_classes.Model" title="data_classes.data_classes.Model"><span class="pre">data_classes.data_classes.Model</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#algorithms.algorithms_impl.StochasticGradientDecentClassifier" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#algorithms.algorithms_impl.BaseAlgorithm" title="algorithms.algorithms_impl.BaseAlgorithm"><code class="xref py py-class docutils literal notranslate"><span class="pre">algorithms.algorithms_impl.BaseAlgorithm</span></code></a></p>
-<p>Stochastic Gradient Decent Classifier algorithm</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="algorithms.algorithms_impl.StochasticGradientDecentClassifier.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#algorithms.algorithms_impl.StochasticGradientDecentClassifier.fit" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> – </p></li>
-<li><p><strong>y</strong> – </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="algorithms.algorithms_impl.StochasticGradientDecentClassifier.predict">
-<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#algorithms.algorithms_impl.StochasticGradientDecentClassifier.predict" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> – </p></li>
-<li><p><strong>y</strong> – </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
+<section id="algorithms-algorithms-impl-module">
+<h2>algorithms.algorithms_impl module<a class="headerlink" href="#algorithms-algorithms-impl-module" title="Permalink to this headline"></a></h2>
 </section>
 <section id="module-algorithms">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-algorithms" title="Permalink to this headline"></a></h2>

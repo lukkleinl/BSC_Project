@@ -36,11 +36,20 @@ class BaseAlgorithm(ABC):
 
     @abstractmethod
     def fit(self, features, labels):
-        """"Fits the data"""
+        """Fits the data"
+
+        :param features:
+        :param labels:
+        :return:
+        """
 
     @abstractmethod
     def predict(self, features):
-        """predicts on given data"""
+        """predicts on given data
+
+        :param features:
+        :return: predicted values
+        """
 
 
 class RandomForestClassifier(BaseAlgorithm):
@@ -111,7 +120,7 @@ class RandomForestClassifier(BaseAlgorithm):
                                       criterion=self._criterion, max_depth=self._max_depth,
                                       max_features=self._max_features, min_samples_leaf=self._min_samples_leaf,
                                       max_leaf_nodes=self._max_leaf_nodes)
-            self._model.fit(features,labels)
+            self._model.fit(features, labels)
         except KeyError as err:
             sys.exit(f"  wrong key {err} for the Random Forest")
 
@@ -121,7 +130,7 @@ class RandomForestClassifier(BaseAlgorithm):
         """
 
         :param features:
-        :return:
+        :return: the predicted y values
         """
         y_predicted = self._model.predict(features)
         return y_predicted
@@ -146,7 +155,7 @@ class StochasticGradientDecentClassifier(BaseAlgorithm):
         """
 
         :param features:
-        :return:
+        :return:the predicted y values
         """
         y_predicted = self._model.predict(features)
         return y_predicted

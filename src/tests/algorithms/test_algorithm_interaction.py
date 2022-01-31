@@ -31,6 +31,14 @@ def test_algorithm_factory_rfc():
     assert type(algorithm) == algorithms.algorithms_creation.RandomForestClassifier
 
 
+def test_load_pkl():
+    fac = algorithms_creation.create_algorithm(model.ensemble_model)
+    algorithm = fac.get_algorithm(model, "src/tests/data/model/" + model.file_name)
+    test_model = algorithm._model
+    algorithm.load_model()
+
+
+
 def test_algorithm_factory_sgd():
     fac = algorithms_creation.create_algorithm(sgd_model.ensemble_model)
     assert type(fac) == algorithms.algorithms_creation.StochasticGradientDecentFactory

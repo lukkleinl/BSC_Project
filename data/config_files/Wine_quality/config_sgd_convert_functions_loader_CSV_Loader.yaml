@@ -1,5 +1,5 @@
 Converter:
-  location_of_notebook: "../data/notebooks/Wine_Quality/"
+  location_of_notebook: "../data/notebooks/"
   convert_preprocessing_steps: True
   parameter_conversion: False
   notebook_name: "prediction-of-quality-of-wine.ipynb"

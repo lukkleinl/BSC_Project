@@ -1,11 +1,3 @@
-Paths:
-   raw_data_path: "../data/raw/"
-   preprocessing_path: "../data/preprocessed/"
-   processed_path: "../data/processed/"
-   model_path: "../data/model/"
-   notebook_path: "../data/notebooks/Wine_Quality/"
-   output_path_converted_files: "../conversion/"
-
 Converter:
   convert_preprocessing_steps: False
   parameter_conversion: False

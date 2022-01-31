@@ -1,1 +1,1 @@
-{"file_name": "rf_model_new.obj", "ensemble_model": "RandomForestClassifier", "model_config": {"max_leaf_nodes": 9, "min_samples_leaf": 4, "n_estimators": 300}, "conversion": false, "name_of_class": null, "name_of_module": null}
+{"file_name": "sgd_model_new.obj", "ensemble_model": "StochasticGradientDecent", "model_config": {"n_estimators": 100, "random_state": 42}, "conversion": false, "name_of_class": null, "name_of_module": null}

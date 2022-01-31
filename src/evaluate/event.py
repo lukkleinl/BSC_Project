@@ -1,3 +1,5 @@
+# from https://github.com/ArjanCodes/betterpython/tree/main/4 - observer pattern
+
 subscribers = {}
 
 
