@@ -33,7 +33,6 @@ Model:
   file_name: "rf_model_new.obj"
   ensemble_model: "RandomForestClassifier"
   model_config: {n_estimators: 100,random_state: 42}
-  export_result: True
 
 
 

@@ -10,3 +10,4 @@ nbparameterise>=0.5
 PyYAML>=6.0
 click>=8.0.3
 lib>=4.0.0
+coverage>=6.3

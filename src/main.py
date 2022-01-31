@@ -12,7 +12,7 @@ from preprocessing import preprocessing
 #@click.argument("config_path", type=str, default="../data/config_files/SV_machines_class/SV_machines_class_config.yaml")
 @click.argument("config_path", type=str, default="../data/config_files/Random_Forest_config/random_forest_config.yaml")
 def main(config_path):
-    configuration.get_config(config_path)
+    configuration.main(config_path)
     data_loader.main("data/configuration/Loader.json")
     preprocessing.main("data/configuration/PreprocessingSteps.json","data/configuration/TrainTestSplit.json")
     algorithms_creation.main("data/configuration/Model.json",

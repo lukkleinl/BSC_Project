@@ -37,7 +37,6 @@ Model:
   file_name: "rf_model_new.obj"
   ensemble_model: "RandomForestClassifier"
   model_config: {n_estimators: 100, criterion: "entropy"}
-  export_result: True
 
 
 

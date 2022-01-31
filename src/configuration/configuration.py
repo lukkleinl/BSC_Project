@@ -51,7 +51,7 @@ def load_configuration(config_file):
     return [loader, model, train_test_split, preprocessing_steps, converter]
 
 
-def get_config(config_file: str):
+def get_config(config_file: str,path_to_data: str):
     """
 
     :param config_file:
@@ -60,8 +60,13 @@ def get_config(config_file: str):
     config_classes = load_configuration(config_file)
 
     for dataclass in config_classes:
-        with open("data/configuration/" + type(dataclass).__name__ + ".json", 'w') as file:
+        with open( path_to_data + type(dataclass).__name__ + ".json", 'w') as file:
             file.write(json.dumps(dataclass.__dict__))
+
+def main(config_file:str):
+    path_to_data = "data/configuration/"
+    get_config(config_file,path_to_data)
+
 
 
 

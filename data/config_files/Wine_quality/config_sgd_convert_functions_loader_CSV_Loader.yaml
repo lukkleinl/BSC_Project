@@ -37,7 +37,6 @@ Model:
   file_name: "sgd_model_new.obj"
   ensemble_model: "StochasticGradientDecent"
   model_config: {n_estimators: 100, random_state: 42}
-  export_result: True
 
 
 
