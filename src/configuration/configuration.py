@@ -41,8 +41,6 @@ def load_configuration(config_file):
         train_test_split = data_classes.TrainTestSplit(**params["TrainTestSplit"])
         converter = data_classes.Converter(**params["Converter"])
         preprocessing_steps = data_classes.PreprocessingSteps(params["Preprocessing_Steps"])
-    except KeyError as err:
-        sys.exit(f"Parameters don't match with implemented classes in the following class {err}")
     except TypeError as err:
         sys.exit(f"Missing argument {err}")
     except FileNotFoundError as err:
@@ -51,7 +49,7 @@ def load_configuration(config_file):
     return [loader, model, train_test_split, preprocessing_steps, converter]
 
 
-def get_config(config_file: str,path_to_data: str):
+def get_config(config_file: str, path_to_data: str):
     """
 
     :param config_file:
@@ -60,13 +58,10 @@ def get_config(config_file: str,path_to_data: str):
     config_classes = load_configuration(config_file)
 
     for dataclass in config_classes:
-        with open( path_to_data + type(dataclass).__name__ + ".json", 'w') as file:
+        with open(path_to_data + type(dataclass).__name__ + ".json", 'w') as file:
             file.write(json.dumps(dataclass.__dict__))
 
-def main(config_file:str):
+
+def main(config_file: str):
     path_to_data = "data/configuration/"
-    get_config(config_file,path_to_data)
-
-
-
-
+    get_config(config_file, path_to_data)

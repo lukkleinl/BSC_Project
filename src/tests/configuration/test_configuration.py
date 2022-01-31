@@ -1,3 +1,5 @@
+import json
+
 import pytest
 
 from configuration.configuration import get_config, load_configuration, _get_parameter
@@ -5,8 +7,17 @@ from conversion import conversion_functions
 
 
 def test_get_config():
-    with pytest.raises(FileNotFoundError):
-        get_config("src/tests/data/config_files/config_rfc_convert_functions_CSV_Loader.yaml")
+    with pytest.raises(SystemExit):
+        get_config("src/tests/data/config_files/config_rfc_convert_functionsa_CSV_Loader.yaml",
+                   "src/tests/data/configuration")
+
+    get_config("src/tests/data/config_files/config_rfc_convert_functions_CSV_Loader.yaml",
+               "src/tests/data/configuration/")
+
+    with open("src/tests/data/configuration/Model.json", 'r') as file:
+        model = json.load(file)
+
+    assert model
 
 
 def test_load_configuration_wrong_path():
@@ -17,24 +28,12 @@ def test_load_configuration_wrong_path():
 def test_load_configuration_wrong_parameters():
     with pytest.raises(SystemExit):
         data_classes = load_configuration(
-            "src/tests/data/config_files/config_rfc_convert_functions_CSV_Loadear_wrong.yaml")
+            "src/tests/data/config_files/config_rfc_convert_functions_CSV_Loader_wrong.yaml")
 
 
-def test_get_parameter_without_conversion():
-    config = conversion_functions.get_config_from_yaml(
-        "src/tests/data/config_files/config_rfc_convert_functions_CSV_Loader.yaml")
-    config = _get_parameter(config)
-    conf = conversion_functions.get_config_from_yaml(
-        "src/tests/data/config_files/config_rfc_convert_functions_CSV_Loader.yaml")
-    print(conf)
-    print(config)
+def test_load_configuration():
+    with pytest.raises(SystemExit):
+        data_classes = load_configuration(
+            "src/tests/data/config_files/config_rfc_convert_functions_CSV_Loader_wrong+.yaml")
 
-def test_get_parameter_with_conversion():
-    config = conversion_functions.get_config_from_yaml(
-        "src/tests/data/config_files/config_rfc_convert_params_CSV_Loader.yaml")
-    config = _get_parameter(config)
-    conf = conversion_functions.get_config_from_yaml(
-        "src/tests/data/config_files/config_rfc_convert_params_CSV_Loader.yaml")
 
-    print("adav\n",config)
-    print(conf)

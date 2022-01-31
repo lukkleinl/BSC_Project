@@ -16,6 +16,9 @@ Preprocessing_Steps:
       target: "quality"
 
   scale_data:
+    conversion: False
+    prior_to_split: False
+    name_of_step: "scale_data"
     name_of_module: "transform_data"
     params:
       scaler_name: "StandardScaler"
@@ -33,7 +36,4 @@ TrainTestSplit:
 Model:
   file_name: "rf_model_new.obj"
   ensemble_model: "RandomForestClassifier"
-  model_config: {n_estimators: 100, criterion: "entropy"}
-
-
-
+  #model_config: {n_estimators: 100}
