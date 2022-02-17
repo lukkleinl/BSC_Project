@@ -1,6 +1,6 @@
 Converter:
   location_of_notebook: "../data/notebooks/"
-  convert_preprocessing_steps: False
+  convert_preprocessing_steps: True
   parameter_conversion: False
   notebook_name: "8_random_forests_for_classification.ipynb"
   preprocessing_tags:
@@ -18,7 +18,7 @@ Preprocessing_Steps:
 Loader:
   name: "ConvertedLoader"
   name_of_class: "elec_loader"
-  name_of_module: "iris_loader"
+  name_of_module: "elec_loader"
 
 TrainTestSplit:
   target: "class"
@@ -29,4 +29,4 @@ TrainTestSplit:
 Model:
   file_name: "rf_model_new.obj"
   ensemble_model: "RandomForestClassifier"
-  model_config: {'max_leaf_nodes': 9, 'min_samples_leaf': 4, 'n_estimators': 300}
+  model_config: {'max_leaf_nodes': 9, 'min_samples_leaf': 4, 'n_estimators': 300, 'max_features': "sqrt" }

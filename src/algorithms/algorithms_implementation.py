@@ -96,7 +96,7 @@ class RandomForestClassifier(BaseAlgorithm):
             self._max_depth = model.model_config["max_depth"]
 
         if "max_features" in model.model_config:
-            self._max_depth = model.model_config["max_features"]
+            self._max_features = model.model_config["max_features"]
 
         if "random_state" in model.model_config:
             self._model_random_state = model.model_config["random_state"]

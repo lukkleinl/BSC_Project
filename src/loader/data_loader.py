@@ -68,6 +68,8 @@ class URLLoader(BaseLoader):
         """
         try:
             urllib.request.urlretrieve(self.url, self.filename)
+            df = pd.read_csv(self.filename, sep=self.seperator)
+            df.to_csv(self.filename)
         except urllib.error.HTTPError as err:
             sys.exit(f" {err} \ncan not load csv from URL\nchange to another loader")
 
